@@ -1,0 +1,144 @@
+<div class="container-xxl flex-grow-1 container-p-y">
+    <h4 class="fw-bold py-3 mb-4"><span class="text-muted fw-light">Quản Lý /</span> Tài Khoản</h4>
+
+    <div class="row">
+        <div class="col-md-12">
+            <ul class="nav nav-pills flex-column flex-md-row mb-3">
+                <li class="nav-item">
+                    <a class="nav-link active" href="/admin"><i class="bx bx-user me-1"></i>
+                        Account</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/admin/notifications"><i class="bx bx-bell me-1"></i>
+                        Notifications</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/admin/connections"><i
+                            class="bx bx-link-alt me-1"></i> Connections</a>
+                </li>
+            </ul>
+            <div class="card mb-4">
+                <h5 class="card-header">Profile Details</h5>
+                <!-- Account -->
+                <div class="card-body">
+                    <div class="d-flex align-items-start align-items-sm-center gap-4">
+                        <img src="../assets/img/avatars/trang2.jpg" alt="user-avatar" class="d-block rounded" height="100"
+                            width="100" id="uploadedAvatar">
+                        <div class="button-wrapper">
+                            <label for="upload" class="btn btn-primary me-2 mb-4" tabindex="0">
+                                <span class="d-none d-sm-block">Upload new photo</span>
+                                <i class="bx bx-upload d-block d-sm-none"></i>
+                                <input type="file" id="upload" class="account-file-input" hidden=""
+                                    accept="image/png, image/jpeg">
+                            </label>
+                            <button type="button" class="btn btn-outline-secondary account-image-reset mb-4">
+                                <i class="bx bx-reset d-block d-sm-none"></i>
+                                <span class="d-none d-sm-block">Reset</span>
+                            </button>
+
+                            <p class="text-muted mb-0">Allowed JPG, GIF or PNG. Max size of 800K</p>
+                        </div>
+                    </div>
+                </div>
+                <hr class="my-0">
+                <div class="card-body">
+                    <form action="/admin/{{admin._id}}?_method=PUT" method="post" id="update-info-admin">
+                        <div class="mb-3">
+                            <label class="form-label" for="basic-icon-default-fullname">Họ Tên</label>
+                            <div class="input-group input-group-merge">
+                                <span id="basic-icon-default-fullname2" class="input-group-text"><i
+                                        class="bx bx-user"></i></span>
+                                <input type="text" class="form-control" id="basic-icon-default-fullname"
+                                    placeholder="John Doe" aria-label="John Doe"
+                                    aria-describedby="basic-icon-default-fullname2" value="{{admin.ho_ten}}"
+                                    name="ho_ten">
+                            </div>
+                        </div>
+                        <input type="text" name="id_tai_khoan" value="{{admin.id_tai_khoan._id}}" hidden>
+                        <div class="mb-3">
+                            <label class="form-label" for="username">Username</label>
+                            <div class="input-group">
+                                <span class="input-group-text">@</span>
+                                <input type="text" id="username" class="form-control" placeholder="Username"
+                                    aria-label="Username" aria-describedby="basic-addon11"
+                                    value="{{admin.id_tai_khoan.username}}" name="username">
+                            </div>
+                        </div>
+                        <div class="mb-3 form-password-toggle">
+                            <label class="form-label" for="password">Mật Khẩu</label>
+                            <div class="input-group">
+                                <input type="password" class="form-control" id="password" placeholder="············"
+                                    aria-describedby="basic-default-password2" value="{{admin.id_tai_khoan.password}}"
+                                    name="password">
+                                <span id="basic-default-password2" class="input-group-text cursor-pointer"><i
+                                        class="bx bx-hide"></i></span>
+                            </div>
+                        </div>
+                        <div class="mb-3 form-password-toggle">
+                            <label class="form-label" for="password-again">Nhập Lại Mật Khẩu</label>
+                            <div class="input-group">
+                                <input type="password" class="form-control" id="password-again"
+                                    placeholder="············" aria-describedby="basic-default-password2"
+                                    value="{{admin.id_tai_khoan.password}}">
+                                <span id="basic-default-password2" class="input-group-text cursor-pointer"><i
+                                        class="bx bx-hide"></i></span>
+                            </div>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label d-block">Giới Tính</label>
+                            <div class="form-check form-check-inline mt-3">
+                                <input class="form-check-input" type="radio" name="gioi_tinh" id="inlineRadio1"
+                                    value="Nam" {{#if (ifEq admin.gioi_tinh "Nam" )}} checked {{/if}}>
+                                <label class="form-check-label" for="inlineRadio1">Nam</label>
+                            </div>
+                            <div class="form-check form-check-inline">
+                                <input class="form-check-input" type="radio" name="gioi_tinh" id="inlineRadio2"
+                                    value="Nữ" {{#if (ifEq admin.gioi_tinh "Nữ" )}} checked {{/if}}>
+                                <label class="form-check-label" for="inlineRadio2">Nữ</label>
+                            </div>
+                            <div class="form-check form-check-inline">
+                                <input class="form-check-input" type="radio" name="gioi_tinh" id="inlineRadio3"
+                                    value="Khác" {{#if (ifEq admin.gioi_tinh "Khác" )}} checked {{/if}}>
+                                <label class="form-check-label" for="inlineRadio3">Khác</label>
+                            </div>
+                        </div>
+
+                        <div class="mb-3">
+                            <label class="form-label" for="basic-icon-default-email">Email</label>
+                            <div class="input-group input-group-merge">
+                                <span class="input-group-text"><i class="bx bx-envelope"></i></span>
+                                <input type="text" id="basic-icon-default-email" class="form-control"
+                                    placeholder="john.doe" aria-label="john.doe"
+                                    aria-describedby="basic-icon-default-email2" value="{{admin.email}}" name="email">
+                                <span id="basic-icon-default-email2" class="input-group-text">@example.com</span>
+                            </div>
+                            <div class="form-text">You can use letters, numbers &amp; periods</div>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label" for="basic-icon-default-phone">Số Điện Thoại</label>
+                            <div class="input-group input-group-merge">
+                                <span id="basic-icon-default-phone2" class="input-group-text"><i
+                                        class="bx bx-phone"></i></span>
+                                <input type="text" id="basic-icon-default-phone" class="form-control phone-mask"
+                                    placeholder="658 799 8941" aria-label="658 799 8941"
+                                    aria-describedby="basic-icon-default-phone2" value="{{admin.sdt}}" name="sdt">
+                            </div>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label" for="basic-icon-default-message">Địa Chỉ</label>
+                            <div class="input-group input-group-merge">
+                                <span id="basic-icon-default-message2" class="input-group-text"><i
+                                        class='bx bx-current-location'></i></span>
+                                <input id="basic-icon-default-message" class="form-control"
+                                    placeholder="Ninh Kiều, Cần Thơ" value="{{admin.dia_chi}}" name="dia_chi"></input>
+                            </div>
+                        </div>
+                        <button class="btn btn-primary" type="submit">Cập Nhật</button>
+
+                    </form>
+                </div>
+                <!-- /Account -->
+            </div>
+        </div>
+    </div>
+</div>

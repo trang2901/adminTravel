@@ -1,0 +1,123 @@
+<div class="container-xxl flex-grow-1 container-p-y">
+  <h4 class="fw-bold py-3 mb-4"><span class="text-muted fw-light">Quản Lý/</span>
+    Lịch Trình</h4>
+
+  <!-- Basic Layout -->
+  <div class="row">
+    <div class="col-xl">
+      <div class="card mb-4">
+        <div class="card-header d-flex justify-content-between align-items-center">
+          <h5 class="mb-0">{{lichtrinh.id_dia_diem.ten}}</h5>
+          <small class="text-muted float-end">Chỉnh Sửa</small>
+        </div>
+        <div class="card-body">
+          <form method="post" action="/lichtrinh/{{lichtrinh._id}}?_tour={{tourSlug}}&_method=PUT">
+
+            <div class="mb-3">
+              <label class="form-label" for="dia-diem">Địa Điểm</label>
+              <div class="input-group input-group-merge">
+                <span class="input-group-text">
+                  <i class="bx bxs-location-plus"></i></span>
+                <select name="id_dia_diem" id="dia-diem" class="form-select" required>
+                  <option value="{{lichtrinh.id_dia_diem._id}}" hidden>{{lichtrinh.id_dia_diem.ten}}</option>
+                  {{#each diadiems}}
+                  <option value="{{this._id}}">{{this.ten}}</option>
+                  {{/each}}
+                </select>
+              </div>
+            </div>
+
+            <div class="mb-3">
+              <label class="form-label" for="ngay_o">Ngày ở</label>
+              <div class="input-group input-group-merge">
+                <span class="input-group-text"><i class="bx bx-time"></i></span>
+                <input type="text" class="form-control" placeholder="" id="ngay_o" name="ngay_o" value="{{lichtrinh.ngay_o}}" />
+              </div>
+            </div>
+            <div class="mb-3">
+              <label class="form-label" for="dich-vu">Tổng quát</label>
+              <div class="input-group input-group-merge">
+                <span class="input-group-text"><i class="bx bx-hotel"></i></span>
+                <textarea type="text" class="form-control"  id="chitiet" name="chitiet">{{lichtrinh.chitiet}}</textarea>
+              </div>
+            </div>
+            <p>Chi tiết cụ thể: </p>
+
+            <div class="mb-3">
+              <label class="form-label" for="dich-vu">Sáng</label>
+              <div class="input-group input-group-merge">
+                <span class="input-group-text"><i class="bx bx-hotel"></i></span>
+                <input type="text" class="form-control" value="{{lichtrinh.chitietlichtrinh}}"placeholder="Chi tiết lịch trình" id="chitietlichtrinh" name="chitietlichtrinh" />
+              </div>
+            </div>
+            <div class="mb-3">
+              <label class="form-label" for="dich-vu">Trưa</label>
+              <div class="input-group input-group-merge">
+                <span class="input-group-text"><i class="bx bx-hotel"></i></span>
+                <input type="text" class="form-control" value="{{lichtrinh.chitietlichtrinh}}" id="chitietlichtrinh" name="chitietlichtrinh" />
+              </div>
+            </div>
+             <div class="mb-3">
+              <label class="form-label" for="dich-vu">Chiều</label>
+              <div class="input-group input-group-merge">
+                <span class="input-group-text"><i class="bx bx-hotel"></i></span>
+                <input type="text" class="form-control" value="{{lichtrinh.chitietlichtrinh}}" id="chitietlichtrinh" name="chitietlichtrinh" />
+              </div>
+            </div>
+            <div class="mb-3">
+              <label class="form-label" for="dich-vu">Tối</label>
+              <div class="input-group input-group-merge">
+                <span class="input-group-text"><i class="bx bx-hotel"></i></span>
+                <input type="text" class="form-control" value="{{lichtrinh.chitietlichtrinh}}" id="chitietlichtrinh" name="chitietlichtrinh" />
+              </div>
+            </div>
+           <div class="mb-3">
+              <label class="form-label" for="su-co">Nơi nghỉ chân</label>
+              <div class="input-group input-group-merge">
+                <span id="su-co2" class="input-group-text"><i class="bx bxs-radiation"></i></span>
+                <textarea name="noinghichan" id="noinghichan" class="form-control"
+                  placeholder="Thiên tai, chiến tranh, dịch bệnh,..." aria-label="Thiên tai, chiến tranh, dịch bệnh,..."
+                  aria-describedby="su-co2">{{lichtrinh.noinghichan}}</textarea>
+              </div>
+            </div>
+            
+            <div class="mb-3">
+              <label class="form-label" for="dich-vu">Dịch Vụ</label>
+              <div class="input-group input-group-merge">
+                <span class="input-group-text"><i class="bx bx-hotel"></i></span>
+                <input type="text" class="form-control" placeholder="Khách Sạn" id="dich-vu" name="dich_vu"
+                  value="{{lichtrinh.dich_vu}}" />
+              </div>
+            </div>
+
+            <div class="mb-3">
+              <label class="form-label" for="su-co">Sự Cố</label>
+              <div class="input-group input-group-merge">
+                <span id="su-co2" class="input-group-text"><i class="bx bxs-radiation"></i></span>
+                <textarea name="su_co" id="su-co" class="form-control"
+                  placeholder="Thiên tai, chiến tranh, dịch bệnh,..." aria-label="Thiên tai, chiến tranh, dịch bệnh,..."
+                  aria-describedby="su-co2">{{lichtrinh.su_co}}</textarea>
+              </div>
+            </div>
+
+            <div class="mb-3">
+              <label class="form-label" for="defaultSelect">Trạng Thái</label>
+              <div class="input-group input-group-merge">
+                <span class="input-group-text">
+                  <i class="bx bx-edit"></i></span>
+                <select name="trang_thai" id="defaultSelect" class="form-select" required>
+                  <option value="{{lichtrinh.trang_thai}}" hidden>{{lichtrinh.trang_thai}}</option>
+                  <option value="Đang đến">Đang đến</option>
+                  <option value="Đã tham quan">Đã tham quan</option>
+                  <option value="Hoãn">Hoãn</option>
+                </select>
+              </div>
+            </div>
+
+            <button type="submit" class="btn btn-primary">Lưu</button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

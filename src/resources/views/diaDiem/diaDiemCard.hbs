@@ -1,0 +1,102 @@
+<div class="container-xxl flex-grow-1 container-p-y">
+  <h4 class="fw-bold py-3 mb-4">
+    <span class="text-muted fw-light">Quản Lý /</span>
+    Địa Điểm
+  </h4>
+  <div style="padding: 0 0 20px 0">
+    <a class="btn rounded-pill btn-primary" href="/diadiem/addForm">Thêm Địa
+      Điểm</a>
+  </div>
+  <!-- Row -->
+  <div class="row mb-5">
+
+    {{#each diadiems}}
+    <!-- Card-item -->
+    <div class="col-md-6 col-lg-4 mb-3">
+      <div class="card h-100">
+        <a href="/diadiem/{{this.slug}}"><img
+            class="card-img-top"
+            src="{{@root.apiLink}}{{this.hinh}}"
+            alt="Card image cap"
+            style="
+                          width: 100%;
+                          height: 280px;
+                          background-size: cover;
+                        "
+          />
+        </a>
+        <div class="card-body">
+          <h5 class="card-title">{{this.ten}}</h5>
+          <h7 class="text-info"><i class='bx bxs-tag'></i></i>{{this.tag}}</h7>
+          <p class="card-text block-ellipsis">
+            {{this.mo_ta}}
+          </p>
+          <div style="display: flex; justify-content: space-around">
+            <a href="diadiem/updateForm/{{this.slug}}" class="btn btn-outline-primary">Chỉnh
+              Sửa</a>
+            <a
+              href="javascript:void(0)"
+              class="btn btn-outline-danger"
+              data-bs-toggle="modal"
+              data-bs-target="#modal-delete"
+              data-id="{{this._id}}"
+              data-name="{{this.ten}}"
+              data-collection="diadiem"
+            >Xóa</a>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- End-card-item -->
+    {{/each}}
+  </div>
+</div>
+<!-- Modal Delete-->
+<div
+  class="modal fade "
+  id="modal-delete"
+  aria-labelledby="modalToggleLabel"
+  tabindex="-1"
+  style="display: none"
+  aria-hidden="true"
+>
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="modalToggleLabel">
+          Xác Nhận Xóa
+        </h5>
+        <button
+          type="button"
+          class="btn-close"
+          data-bs-dismiss="modal"
+          aria-label="Close"
+        ></button>
+      </div>
+      <div class="modal-body">
+        Bạn có chắc chắn muốn xóa địa điểm này không?
+      </div>
+      <div class="modal-footer">
+        <button
+          type="button"
+          class="btn btn-outline-info"
+          data-bs-dismiss="modal"
+        >
+          Close
+        </button>
+        <button
+          id="btn-delete"
+          class="btn btn-danger"
+          data-bs-toggle="modal"
+          data-bs-dismiss="modal"
+        >
+          Xóa
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+{{!-- Delete hidden form --}}
+<form action="" method="post" name="delete-form">
+</form>

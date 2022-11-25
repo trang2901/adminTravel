@@ -1,0 +1,77 @@
+<div class="container-xxl flex-grow-1 container-p-y">
+  <h4 class="fw-bold py-3 mb-4">
+    <span class="text-muted fw-light">Quản Lý/</span> Địa Điểm
+  </h4>
+
+  <!-- Basic Layout -->
+  <div class="row">
+    <div class="col-xl">
+      <div class="card mb-4">
+        <div class="card-header d-flex justify-content-between align-items-center">
+          <h5 class="mb-0">{{diadiem.ten}}</h5>
+          <small class="text-muted float-end">Chỉnh Sửa</small>
+        </div>
+        <div class="card-body">
+          <form method="post" action="/diadiem/{{diadiem._id}}?_method=put">
+            <div class="card-body">
+              <img src="{{apiLink}}{{diadiem.hinh}}" alt="user-avatar" class="d-block rounded" width="800"
+                id="uploadedAvatar" />
+              <input type="text" hidden name="hinhDefault" value="{{diadiem.hinh}}">
+              <br>
+              <div class="button-wrapper">
+                <label for="upload" class="btn btn-primary me-2 mb-4" tabindex="0">
+                  <span class="d-none d-sm-block">Tải ảnh lên</span>
+                  <i class="bx bx-upload d-block d-sm-none"></i>
+                  <input name="hinh" type="file" id="upload" class="account-file-input" hidden
+                    accept="image/png, image/jpeg" />
+                </label>
+                <button type="button" class="btn btn-outline-secondary account-image-reset mb-4">
+                  <i class="bx bx-reset d-block d-sm-none"></i>
+                  <span class="d-none d-sm-block">Reset</span>
+                </button>
+
+                <p class="text-muted mb-0">
+                  Allowed JPG, GIF or PNG. Max size of 800K
+                </p>
+              </div>
+            </div>
+            <hr class="my-0" />
+
+            <div class="mb-3">
+              <label class="form-label" for="basic-icon-default-fullname">Tên Địa Điểm</label>
+              <div class="input-group input-group-merge">
+                <span id="basic-icon-default-fullname2" class="input-group-text"><i
+                    class="bx bx-location-plus"></i></span>
+                <input type="text" class="form-control" id="basic-icon-default-fullname" placeholder="Núi Phú Sĩ"
+                  aria-label="Núi Phú Sĩ" aria-describedby="basic-icon-default-fullname2" name="ten"
+                  value="{{diadiem.ten}}" />
+              </div>
+            </div>
+            <div class="mb-3">
+              <label class="form-label" for="tag">Tag</label>
+              <div class="input-group input-group-merge">
+                <span id="tag2" class="input-group-text"><i class='bx bxs-tag'></i></span>
+                <select name="tag" id="tag" class="form-select" required>
+                  {{#each tags}}
+                  <option value="{{../diadiem.tag}}" hidden>{{../diadiem.tag}}</option>
+                  <option value="{{this}}">{{this}}</option>
+                  {{/each}}
+                </select>
+              </div>
+            </div>
+
+            <div>
+              <label for="exampleFormControlTextarea1" class="form-label">Mô tả</label>
+              <textarea class="form-control" id="exampleFormControlTextarea1" rows="15"
+                name="mo_ta">{{diadiem.mo_ta}}</textarea>
+            </div>
+            <br>
+            <button type="submit" class="btn btn-primary">
+              Lưu
+            </button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

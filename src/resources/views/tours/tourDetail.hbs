@@ -1,0 +1,151 @@
+<div class="container-xxl flex-grow-1 container-p-y">
+  <h4 class="fw-bold py-3 mb-4">
+    <span class="text-muted fw-light">Quản Lý / </span>
+    Tour
+  </h4>
+  <div style="margin: -16px 0">
+    <a class="btn rounded-pill btn-outline-primary" href="/tour/addLichTrinhForm/{{tour.slug}}">
+      Thêm Lịch Trình
+    </a>
+    <button class="btn rounded-pill btn-outline-danger" data-bs-toggle="modal" data-bs-target="#modal-delete"
+      data-id="{{tour._id}}" data-name="{{tour.ten}}" data-collection="tour">
+      Xóa Tour này
+    </button>
+  </div>
+  <br />
+  <div style="width: 1100px; display: flex; justify-content: center">
+    <h1 class="text-primary">{{tour.ten}}</h1>
+  </div>
+  <div class="row mb-5">
+    <!-- Card-item -->
+    <div class="col-md-6 col-lg-4 mb-3">
+      <div class="card">
+        <div class="card-header text-danger">Thông Tin Chung</div>
+        <div class="card-body">
+          <p class="card-text">
+            <i class="bx bxs-plane-take-off"></i>
+            {{tour.khoi_hanh}}
+          </p>
+          <p class="card-text">
+            <i class="bx bx-time"></i>
+            {{tour.so_ngay}} ngày
+          </p>
+          <p class="card-text">
+            <i class="bx bx-chair"></i>
+            {{#if tour.du_khach.length}}
+              {{tour.du_khach.length}}/{{tour.so_cho}}
+            {{else}}
+              0/{{tour.so_cho}}
+            {{/if}}
+          </p>
+          <p class="card-text">
+            <i class="bx bx-user-voice"></i>
+            <a href="#">{{tour.nguoi_hd.ho_ten}}</a>
+          </p>
+          <p class="card-text text-primary">
+            <i class="bx bx-purchase-tag-alt"></i>
+            {{tour.gia}} VND
+          </p>
+          <a href="/tour/updateInfoForm?_slug={{tour.slug}}" class="btn btn-primary">Chỉnh Sửa</a>
+        </div>
+      </div>
+    </div>
+    <!-- /Card-item -->
+
+    {{#each tour.lich_trinh}}
+    {{#with this as |lichtrinh|}}
+    <!-- Card-item LichTrinh -->
+    <div class="col-md-6 col-lg-4 mb-3">
+      <div class="card">
+        <div class="card-header text-danger" style="display: flex; justify-content: space-between;">
+          <div>Lịch Trình Địa Điểm {{sum @index 1}}</div>
+          <div class="text-primary"><i class='bx bxs-tag'></i>{{lichtrinh.id_dia_diem.tag}}</div>
+        </div>
+        <div class="card-body">
+          <p class="card-text">
+            <i class="bx bxs-location-plus"></i>
+            <a href="#">{{lichtrinh.id_dia_diem.ten}}</a>
+          </p>
+          <p class="card-text">
+            <i class="bx bx-time"></i>
+            {{lichtrinh.ngay_o}} ngày
+          </p>
+          <p class="card-text">
+            <i class="bx bx-hotel"></i>
+            {{lichtrinh.dich_vu}}
+          </p>
+          <p class="card-text">
+            <i class="bx bxs-radiation"></i>
+            Sự cố: {{lich_trinh.su_co}}
+          </p>
+          <p class="card-text text-info">
+            <i class="bx bx-edit"></i>
+            {{lichtrinh.trang_thai}}
+          </p>
+
+          <a href="/tour/updateLichTrinhForm?_id={{lichtrinh._id}}&_tour={{../tour.slug}}" class="btn btn-primary">Chỉnh Sửa</a>
+          <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#modal-delete"
+            style="margin-left: 20px" data-id="{{lichtrinh._id}}" data-name=" lịch trình {{lichtrinh.id_dia_diem.ten}}" data-collection="lichtrinh">
+            Xóa
+          </button>
+
+         
+        </div>
+      </div>
+    </div>
+    <!-- /Card-item LichTrinh-->
+    {{/with}}
+    {{/each}}
+
+    <div class="col-md-4 col-sm-12">
+      <div class="card overflow-hidden mb-4" style="height: 330px">
+        <h5 class="card-header text-danger">
+          <i class="bx bxs-user-check"></i>
+          Danh Sách khánh hàng tham gia
+        </h5>
+        <div class="card-body ps ps--active-y" id="vertical-example">
+
+          {{#each tour.du_khach}}
+          <p>{{sum @index 1}}: <a href="#">{{this.ho_ten}} </a></p>
+          {{/each}}
+          <div class="ps__rail-x" style="left: 0px; bottom: 0px">
+            <div class="ps__thumb-x" tabindex="0" style="left: 0px; width: 0px"></div>
+          </div>
+          <div class="ps__rail-y" style="top: 0px; height: 232px; right: 0px">
+            <div class="ps__thumb-y" tabindex="0" style="top: 0px; height: 40px"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Modal Delete-->
+<div class="modal fade" id="modal-delete" aria-labelledby="modalToggleLabel" tabindex="-1" style="display: none"
+  aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="modalToggleLabel">
+          Xác Nhận Xóa
+        </h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        Bạn có chắc chắn muốn xóa tour này không?
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-outline-info" data-bs-dismiss="modal">
+          Close
+        </button>
+        <button id="btn-delete" class="btn btn-danger" data-bs-toggle="modal" data-bs-dismiss="modal">
+          Xóa
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+{{!-- Delete hidden form --}}
+<form action="" method="post" name="delete-form">
+</form>

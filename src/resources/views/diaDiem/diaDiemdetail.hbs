@@ -1,0 +1,67 @@
+<div class="container-xxl flex-grow-1 container-p-y">
+  <h4 class="fw-bold py-3 mb-4">
+    <span class="text-muted fw-light">Quản Lý /</span>
+    Địa Điểm
+  </h4>
+  <div style="margin: -16px 0">
+    <a class="btn rounded-pill btn-outline-primary" href="/diadiem/updateForm/{{diadiem.slug}}">
+      Chỉnh Sửa
+    </a>
+    <button class="btn rounded-pill btn-outline-danger" data-bs-toggle="modal" data-bs-target="#modal-delete"
+      data-id="{{diadiem._id}}" data-name="{{diadiem.ten}}" data-collection="diadiem">
+      Xóa
+    </button>
+    
+  </div>
+  <div style="width: 90%; display: flex; justify-content: center">
+    <h1 class="text-primary">{{diadiem.ten}}</h1>
+  </div>
+
+  <h4 class="text-info" >
+      <i class='bx bxs-tag'></i>
+      {{diadiem.tag}}
+    </h4>
+  <br>
+
+  <img src="{{apiLink}}{{diadiem.hinh}}" alt="" style="width: 90%" />
+  <br />
+  <div style="
+                  width: 90%;
+                  margin-top: 20px;
+                  line-height: 1.8;
+                  font-size: 20px;
+                " class="text-dark replaceNewLine">
+    {{{diadiem.mo_ta}}}
+  </div>
+</div>
+
+
+<!-- Modal Delete-->
+<div class="modal fade" id="modal-delete" aria-labelledby="modalToggleLabel" tabindex="-1" style="display: none"
+  aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="modalToggleLabel">
+          Xác Nhận Xóa
+        </h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        Bạn có chắc chắn muốn xóa tour này không?
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-outline-info" data-bs-dismiss="modal">
+          Close
+        </button>
+        <button id="btn-delete" class="btn btn-danger" data-bs-toggle="modal" data-bs-dismiss="modal">
+          Xóa
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+{{!-- Delete hidden form --}}
+<form action="" method="post" name="delete-form">
+</form>

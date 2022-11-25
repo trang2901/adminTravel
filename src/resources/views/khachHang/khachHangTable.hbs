@@ -1,0 +1,119 @@
+<div class="container-xxl flex-grow-1 container-p-y">
+  <h4 class="fw-bold py-3 mb-4"><span class="text-muted fw-light">Quản Lý /</span>
+    Khách Hàng</h4>
+  <!-- Table -->
+  <div class="card">
+    <h5 class="card-header text-info">Danh Sách Khách Hàng</h5>
+    <div class="table-responsive text-nowrap">
+      <table class="table">
+        <thead>
+          <tr>
+            <th class="text-primary">Họ Tên</th>
+            <th class="text-primary">Số Điện Thoại</th>
+            <th class="text-primary">Email</th>
+            <th class="text-primary">Số Tour Đã Đặt</th>
+            <th class="text-primary">Hành Động</th>
+          </tr>
+        </thead>
+        <tbody class="table-border-bottom-0">
+          {{#each khachhangs}}
+          <tr>
+            <td><i class="fab fa-angular fa-lg text-danger me-3"></i>
+              <strong>{{this.ho_ten}}</strong>
+            </td>
+            <td>{{this.sdt}}</td>
+            <td>{{this.email}}</td>
+            <td><span class="badge bg-label-primary me-1">{{this.tours_da_dat.length}}</span></td>
+            <td>
+              <div class="dropdown">
+                <button type="button" class="btn p-0 dropdown-toggle hide-arrow" data-bs-toggle="dropdown">
+                  <i class="bx bx-dots-vertical-rounded"></i>
+                </button>
+                <div class="dropdown-menu">
+                  <a class="dropdown-item" data-bs-toggle="modal" data-bs-target="#modalTourTG{{@index}}"><i
+                      class="bx bx-file-find"></i> Tour Đã Đặt</a>
+
+                  <a class="dropdown-item" data-bs-toggle="modal" data-bs-target="#modal-delete"data-id="{{this._id}}" data-name="{{this.ho_ten}}"
+                                        data-collection="khachhang"><i
+                      class="bx bx-trash me-1"></i> Xóa</a>
+                </div>
+              </div>
+            </td>
+          </tr>
+          <!-- Modal Tour Đã Đặt-->
+          <div class="modal fade" id="modalTourTG{{@index}}" tabindex="-1" style="display: none;" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered" role="document">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h5 class="modal-title" id="modalTourTG{{@index}}Title">{{this.ho_ten}}</h5>
+                  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                  <div class="card overflow-hiden mb-4" >
+                    <h5 class="card-header text-danger">
+                      <i class="bx bxs-user-check"></i>
+                      Danh Sách Tour Đã Đặt
+                    </h5>
+                    <div class="card-body ps ps--active-y" id="vertical-example">
+                      {{#each this.tours_da_dat}}
+                      <p>{{sum @index 1}}: <a href="/tour/{{this.slug}}">{{this.ten}} </a></p>
+                      {{/each}}
+                      <div class="ps__rail-x" style="left: 0px; bottom: 0px">
+                        <div class="ps__thumb-x" tabindex="0" style="left: 0px; width: 0px"></div>
+                      </div>
+                      <div class="ps__rail-y" style="top: 0px; height: 232px; right: 0px">
+                        <div class="ps__thumb-y" tabindex="0" style="top: 0px; height: 40px"></div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="modal-footer">
+                  <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Đóng</button>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          {{/each}}
+
+
+
+
+        </tbody>
+      </table>
+    </div>
+  </div>
+  <!-- /Table -->
+
+
+  <!-- Modal Delete-->
+<div class="modal fade " id="modal-delete" aria-labelledby="modalToggleLabel" tabindex="-1" style="display: none"
+    aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="modalToggleLabel">
+                    Xác Nhận Xóa
+                </h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                Bạn có chắc chắn muốn xóa địa điểm này không?
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-outline-info" data-bs-dismiss="modal">
+                    Close
+                </button>
+                <button id="btn-delete" class="btn btn-danger" data-bs-toggle="modal" data-bs-dismiss="modal">
+                    Xóa
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+
+{{!-- Delete hidden form --}}
+<form action="" method="post" name="delete-form">
+</form>
+
+</div>

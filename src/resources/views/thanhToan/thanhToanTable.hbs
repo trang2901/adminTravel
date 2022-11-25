@@ -1,0 +1,140 @@
+<div class="container-xxl flex-grow-1 container-p-y">
+  <h4 class="fw-bold py-3 mb-4"><span class="text-muted fw-light">Quản Lý /</span>
+    Thanh Toán</h4>
+  <!-- Table -->
+
+  <div class="card">
+    <h5 class="card-header text-info">Danh Sách Thanh Toán</h5>
+    <div class="table-responsive text-nowrap">
+      <table class="table">
+        <thead>
+          <tr>
+            <th class="text-primary">Họ Tên</th>
+            <th class="text-primary">Tour</th>
+            <th class="text-primary">Thành Tiền (VND)</th>
+            <th class="text-primary">Trạng Thái</th>
+            <th class="text-primary">Người Duyệt</th>
+            <th class="text-primary">Hành Động</th>
+          </tr>
+        </thead>
+        <tbody class="table-border-bottom-0">
+          {{#each thanhtoans}}
+          <tr>
+            <td><i class="fab fa-angular fa-lg text-danger me-3"></i>
+              <strong>{{this.id_khach_hang.ho_ten}}</strong>
+            </td>
+            <td>{{this.id_tour.ten}}</td>
+            <td>{{this.thanh_tien}}</td>
+            <td>
+              <span class="badge 
+              {{#if (ifEq this.trang_thai_duyet "Chưa duyệt")}}
+              bg-label-danger
+              {{else}}
+              bg-label-primary
+              {{/if}}
+               me-1">
+                {{this.trang_thai_duyet}}
+              </span>
+            </td>
+            <td>{{this.nguoi_duyet.ho_ten}}</td>
+            <td>
+              <div class="dropdown">
+                <button type="button" class="btn p-0 dropdown-toggle hide-arrow" data-bs-toggle="dropdown">
+                  <i class="bx bx-dots-vertical-rounded"></i>
+                </button>
+
+                <div class="dropdown-menu">
+                  {{#if (ifEq this.trang_thai_duyet "Chưa duyệt")}}
+                  <a class="dropdown-item" href="/thanhtoan/{{this._id}}?_action=duyet"><i class="bx bx-edit"></i>
+                    Duyệt</a> 
+                    {{/if}}
+                  <a class="dropdown-item" href="/thanhtoan/{{this._id}}"><i class="bx bx-file-find"></i>
+                    Kỳ Thanh Toán</a>
+                  <a class="dropdown-item" href="javascript:void(0);" data-bs-toggle="modal"
+                    data-bs-target="#modal-delete" data-id="{{this._id}}" data-name="thanh toán này"
+                    data-collection="thanhtoan"><i class="bx bx-trash me-1"></i>
+                    Xóa</a>
+                </div>
+                
+              </div>
+            </td>
+          </tr>
+          {{/each}}
+
+        </tbody>
+      </table>
+    </div>
+  </div>
+  <!-- /Table -->
+
+</div>
+
+<!-- Modal Delete-->
+<div class="modal fade " id="modal-delete" aria-labelledby="modalToggleLabel" tabindex="-1" style="display: none"
+  aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="modalToggleLabel">
+          Xác Nhận Xóa
+        </h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        Bạn có chắc chắn muốn xóa địa điểm này không?
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-outline-info" data-bs-dismiss="modal">
+          Close
+        </button>
+        <button id="btn-delete" class="btn btn-danger" data-bs-toggle="modal" data-bs-dismiss="modal">
+          Xóa
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+{{!-- Delete hidden form --}}
+<form action="" method="post" name="delete-form">
+</form>
+
+<p>Thống kê doanh thu theo tháng</p>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.5.0/Chart.min.js"></script>
+<canvas id="myChart" style="width:100%;max-width:600px"></canvas>
+{{#each thanhtoans}}
+<script>
+var xValues = [1,2,3,4,5,6,7,8,9,10,11,12];
+var yValues = [3,2,5,6,7,5,44,3,2,4,5,3,2];
+var barColors = ["red", "green","blue","orange","brown"];
+
+new Chart("myChart", {
+  type: "bar",
+  data: {
+    labels: xValues,
+    datasets: [{
+      backgroundColor: barColors,
+      data: yValues
+    }]
+  },
+  options: {
+    legend: {display: false},
+    title: {
+      display: true,
+      text: "World Wine Production 2018"
+    }
+  }
+});
+</script>
+{{/each}}
+<p>test tính tổng</p>
+{{#each thanhtoans}}
+<p>{{this.thanh_tien}}</p>
+<script>
+  var string = {{convertObjToStr this.thanh_tien}}
+</script>
+{{!-- <p>{{sumArray array}}</p> --}}
+<p>{{convertStrToInt (convertObjToStr this.thanh_tien) }}</p>
+<p>{{convertObjToStr this.thanh_tien}}</p>
+<p>----------------------------------------------</p>
+{{/each}}
