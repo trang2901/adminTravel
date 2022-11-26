@@ -8,15 +8,12 @@
         <div class="d-flex align-items-end row">
           <div class="col-sm-7">
             <div class="card-body">
-              <h5 class="card-title text-primary">Congratulations John! 🎉</h5>
+              <h5 class="card-title text-primary">Xin chào! 🎉</h5>
               <p class="mb-4">
-                You have done
-                <span class="fw-bold">72%</span>
-                more sales today. Check your new badge in your profile.
+                Hãy kiểm tra
+                <span class="fw-bold">số liệu thống kê</span>
+                của bạn trong tháng và năm nay nhé !
               </p>
-
-              <a href="javascript:;" class="btn btn-sm btn-outline-primary">View
-                Badges</a>
             </div>
           </div>
           <div class="col-sm-5 text-center text-sm-left">
@@ -29,8 +26,10 @@
         </div>
       </div>
     </div>
+
     <div class="col-lg-4 col-md-4 order-1">
       <div class="row">
+
         <div class="col-lg-6 col-md-12 col-6 mb-4">
           <div class="card">
             <div class="card-body">
@@ -38,25 +37,61 @@
                 <div class="avatar flex-shrink-0">
                   <img src="../assets/img/icons/unicons/chart-success.png" alt="chart success" class="rounded" />
                 </div>
-                <div class="dropdown">
-                  <button class="btn p-0" type="button" id="cardOpt3" data-bs-toggle="dropdown" aria-haspopup="true"
-                    aria-expanded="false">
-                    <i class="bx bx-dots-vertical-rounded"></i>
-                  </button>
-                  <div class="dropdown-menu dropdown-menu-end" aria-labelledby="cardOpt3">
-                    <a class="dropdown-item" href="javascript:void(0);">View
-                      More</a>
-                    <a class="dropdown-item" href="javascript:void(0);">Delete</a>
-                  </div>
-                </div>
               </div>
-              <span class="fw-semibold d-block mb-1">Profit</span>
-              <h3 class="card-title mb-2">$12,628</h3>
-              <small class="text-success fw-semibold"><i class="bx bx-up-arrow-alt"></i>
-                +72.80%</small>
+              <span class="fw-semibold d-block mb-1">Tổng doanh thu trong tháng</span>
+              <h3 class="card-title mb-2"></h3>
+
+              <small class="text-success fw-semibold" id="totals">
+                <script>
+                  const getMonths = (date) => {
+                    const temp = new Date(date);
+                    return Number(temp.getMonth() + 1);
+                  }
+                  const getDataTotal = async () => {
+                    let response = await fetch(`http://localhost:3001/thanhtoan`);
+                    let data = await response.json();
+                    let items = [];
+                    for (var i = 1; i <= 12; i++) {
+                      items.push(
+                        {
+                          month: i,
+                          amount: 0
+                        }
+                      )
+                    }
+                    data.map((item) => {
+                      items.forEach(record => {
+                        if (record.month === getMonths(item.createdAt) && item.trang_thai_duyet === "ĐÃ DUYỆT") {
+                          record.amount += parseInt(item.thanh_tien.replaceAll('.', ''));
+                        }
+                      })
+
+                    })
+                    return items
+                  }
+
+                  const formatPrice = (number) => {
+                    return new Intl.NumberFormat("it-IT", {
+                      style: "currency",
+                      currency: "VND",
+                    }).format(number);
+                  }
+
+                  getDataTotal().then((data) => {
+                    data.map((it) => {
+                      if (it.month === getMonths(new Date())) {
+                        document.getElementById("totals").innerHTML = formatPrice(it.amount)
+
+                      }
+                    })
+
+                  })
+                </script>
+              </small>
             </div>
           </div>
         </div>
+
         <div class="col-lg-6 col-md-12 col-6 mb-4">
           <div class="card">
             <div class="card-body">
@@ -64,29 +99,89 @@
                 <div class="avatar flex-shrink-0">
                   <img src="../assets/img/icons/unicons/wallet-info.png" alt="Credit Card" class="rounded" />
                 </div>
-                <div class="dropdown">
-                  <button class="btn p-0" type="button" id="cardOpt6" data-bs-toggle="dropdown" aria-haspopup="true"
-                    aria-expanded="false">
-                    <i class="bx bx-dots-vertical-rounded"></i>
-                  </button>
-                  <div class="dropdown-menu dropdown-menu-end" aria-labelledby="cardOpt6">
-                    <a class="dropdown-item" href="javascript:void(0);">View
-                      More</a>
-                    <a class="dropdown-item" href="javascript:void(0);">Delete</a>
-                  </div>
-                </div>
               </div>
-              <span>Sales</span>
-              <h3 class="card-title text-nowrap mb-1">$4,679</h3>
-              <small class="text-success fw-semibold"><i class="bx bx-up-arrow-alt"></i>
+              <span>Tổng lượng đơn đặt trong tháng</span>
+              <p></p>
+              <small class="text-success fw-semibold" id="sumBills">
                 +28.42%</small>
+                  <script>
+                
+                const get_day_of_months = (y, month) => {
+                  return new Date(y, month, 0).getDate();
+                };
+
+                const Months = (d) => {
+                  const temp = new Date(d);
+                  return Number(temp.getMonth() + 1);
+                }
+                const getDates = (date1) => {
+                  const temp = new Date(date1);
+                  return Number(temp.getDate());
+                }
+                const datec = new Date();
+                const monthc = datec.getMonth() + 1;
+                const yearc = datec.getFullYear();
+
+      
+                const countDatec = get_day_of_months(yearc, monthc);
+                let label = [];
+
+                const SumBill = async () => {
+                  let response = await fetch(`http://localhost:3001/taikhoan`);
+                  let data = await response.json();
+
+                  let res = await fetch(`http://localhost:3001/thanhtoan`);
+                  let databill = await res.json();
+
+                  let countSignUp = [];
+                  for (let i = 1; i <= countDatec; i++) {
+                    label.push(i);
+                    countSignUp.push(
+                      {
+                        date: i,
+                        amount: 0,
+                        amountBill: 0,
+                      }
+                    )
+                  }
+
+                  for (let i = 0; i < countSignUp.length; i++) {
+                    data.map((dataItem) => {
+                      if (Months(dataItem.createdAt) === Months(new Date()) && getDates(dataItem.createdAt) === countSignUp[i].date) {
+                        countSignUp[i].amount++;
+
+                      }
+                    })
+                    databill.map((itemData) => {
+                      if (Months(itemData.createdAt) === Months(new Date()) && getDates(itemData.createdAt) === countSignUp[i].date) {
+                        countSignUp[i].amountBill++;
+                      }
+                    })
+                  }
+                  return countSignUp
+                }
+                let sumTest = 0;
+                SumBill().then((data) => {
+                    console.log('huhuuuh', data);
+                    for(let p = 0; p<data.length; p++){
+                      sumTest += data[p].amountBill
+                    }
+                    document.getElementById("sumBills").innerHTML = sumTest
+                })
+
+              </script>
+
+           
+
             </div>
           </div>
         </div>
       </div>
     </div>
 
-    <!-- Total Revenue Biểu đồ cột-->
+
+
+<!-- Total Revenue Biểu đồ cột =================================================================================================-->
     <div class="col-12 col-lg-8 order-2 order-md-3 order-lg-2 mb-4">
       <div class="card">
         <div class="row row-bordered g-0">
@@ -95,6 +190,7 @@
               Doanh thu theo tháng
             </h5>
             <canvas id="myChart" style="width:100%;max-width:1000px"></canvas>
+
             <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.4.0/Chart.min.js"></script>
             <script>
               const getData = async () => {
@@ -173,91 +269,87 @@
             </script>
 
           </div>
-          {{!-- <div class="col-md-4">
-            <div class="card-body">
-              <div class="text-center">
-
-              </div>
-            </div>
-
-            <div class="text-center fw-semibold pt-3 mb-2">62% Company Growth</div>
-
-
-
-          </div> --}}
+          
         </div>
       </div>
     </div>
-    <!--/ Total Revenue -->
+<!-- Này là Payment==========================================================================================================-->
     <div class="col-12 col-md-8 col-lg-4 order-3 order-md-2">
-      <div class="row">
-        <div class="col-6 mb-4">
-          <div class="card">
-            <div class="card-body">
-              <div class="card-title d-flex align-items-start justify-content-between">
-                <div class="avatar flex-shrink-0">
-                  <img src="../assets/img/icons/unicons/paypal.png" alt="Credit Card" class="rounded" />
-                </div>
-                <div class="dropdown">
-                  <button class="btn p-0" type="button" id="cardOpt4" data-bs-toggle="dropdown" aria-haspopup="true"
-                    aria-expanded="false">
-                    <i class="bx bx-dots-vertical-rounded"></i>
-                  </button>
-                  <div class="dropdown-menu dropdown-menu-end" aria-labelledby="cardOpt4">
-                    <a class="dropdown-item" href="javascript:void(0);">View
-                      More</a>
-                    <a class="dropdown-item" href="javascript:void(0);">Delete</a>
-                  </div>
-                </div>
-              </div>
-              <span class="d-block mb-1">Payments</span>
-              <h3 class="card-title text-nowrap mb-2">$2,456</h3>
-              <small class="text-danger fw-semibold"><i class="bx bx-down-arrow-alt"></i>
-                -14.82%</small>
-            </div>
-          </div>
-        </div>
-        <div class="col-6 mb-4">
-          <div class="card">
-            <div class="card-body">
-              <div class="card-title d-flex align-items-start justify-content-between">
-                <div class="avatar flex-shrink-0">
-                  <img src="../assets/img/icons/unicons/cc-primary.png" alt="Credit Card" class="rounded" />
-                </div>
-                <div class="dropdown">
-                  <button class="btn p-0" type="button" id="cardOpt1" data-bs-toggle="dropdown" aria-haspopup="true"
-                    aria-expanded="false">
-                    <i class="bx bx-dots-vertical-rounded"></i>
-                  </button>
-                  <div class="dropdown-menu" aria-labelledby="cardOpt1">
-                    <a class="dropdown-item" href="javascript:void(0);">View
-                      More</a>
-                    <a class="dropdown-item" href="javascript:void(0);">Delete</a>
-                  </div>
-                </div>
-              </div>
-              <span class="fw-semibold d-block mb-1">Transactions</span>
-              <h3 class="card-title mb-2">$14,857</h3>
-              <small class="text-success fw-semibold"><i class="bx bx-up-arrow-alt"></i>
-                +28.14%</small>
-            </div>
-          </div>
-        </div>
-        <!-- </div>
-    <div class="row"> -->
-        <div class="col-12 mb-4">
+      
+<!-- Này là Tran==========================================================================================================-->
+        
+<!-- Này là Doanh thu trong năm==========================================================================================================-->
+    <div class="row"> 
+        <div class="col-12 mb-6">
           <div class="card">
             <div class="card-body">
               <div class="d-flex justify-content-between flex-sm-row flex-column gap-3">
                 <div class="d-flex flex-sm-column flex-row align-items-start justify-content-between">
                   <div class="card-title">
-                    <h5 class="text-nowrap mb-2">Profile Report</h5>
-                    <span class="badge bg-label-warning rounded-pill">Year 2021</span>
+                    <h5 class="text-nowrap mb-2">Doanh thu trong năm</h5>
+                    <span class="badge bg-label-warning rounded-pill" id="yearCurrent"></span>
+                    <script>
+                      const getYear = (date) => {
+                        const temp = new Date(date);
+                        return Number(temp.getFullYear());
+                      }
+                      const year1 = getYear(new Date());
+                      document.getElementById("yearCurrent").innerHTML = `Năm` + ` ` + year1
+                    </script>
                   </div>
                   <div class="mt-sm-auto">
-                    <small class="text-success text-nowrap fw-semibold"><i class="bx bx-chevron-up"></i>
-                      68.2%</small>
-                    <h3 class="mb-0">$84,686k</h3>
+                    <h3 class="mb-0" id="sumYear"></h3>
+                    <script>
+
+                      const getYears = (date) => {
+                        const temp = new Date(date);
+                        return Number(temp.getFullYear());
+                      }
+
+                      const sumYear = async () => {
+                          let response = await fetch(`http://localhost:3001/thanhtoan`);
+                          let data = await response.json();
+                          let items = [];
+                    for (var i = 1; i <= 12; i++) {
+                      items.push(
+                        {
+                          month: i,
+                          amount: 0
+                        }
+                      )
+                    }
+                    data.map((item) => {
+                      items.forEach(record => {
+                        if (record.month === getMonths(item.createdAt) && item.trang_thai_duyet === "ĐÃ DUYỆT") {
+                          record.amount += parseInt(item.thanh_tien.replaceAll('.', ''));
+                        }
+                      })
+
+                    })
+                    return items
+                  }
+
+                  const formatPrices = (number) => {
+                    return new Intl.NumberFormat("it-IT", {
+                      style: "currency",
+                      currency: "VND",
+                    }).format(number);
+                  }
+
+
+                  let sum1 = 0;
+
+                  sumYear().then((data) => {
+                    data.map((it) => {
+                        sum1 += it.amount;
+                        console.log(data);
+                        document.getElementById("sumYear").innerHTML = formatPrices(sum1)
+
+                    })
+
+                  })
+                    </script>
+
                   </div>
                 </div>
                 <div id="profileReportChart"></div>
@@ -268,124 +360,182 @@
       </div>
     </div>
   </div>
+<!-- Thống kê số lượng sp==========================================================================================================-->
   <div class="row">
-    <!-- Order Statistics biểu đồ tròn -->
     <div class="col-md-6 col-lg-4 col-xl-4 order-0 mb-4">
       <div class="card h-100">
         <div class="card-header d-flex align-items-center justify-content-between pb-0">
           <div class="card-title mb-0">
-            <h5 class="m-0 me-2">Order Statistics</h5>
-            {{!-- <small class="text-muted">42.82k Total Sales</small> --}}
+            <h5 class="m-0 me-2">Thống kê số lượng sản phẩm</h5>
+            <small class="text-muted" id="totalTour"></small>
+            <script>
+              const getTotalData = async () => {
+                let response = await fetch(`http://localhost:3001/tour`);
+                let data = await response.json();
+                return data;
+              }
+              getTotalData().then((data) => {
+                document.getElementById("totalTour").innerHTML = data.length;
+              })
+            </script>
           </div>
-          {{!-- <div class="dropdown">
-            <button class="btn p-0" type="button" id="orederStatistics" data-bs-toggle="dropdown" aria-haspopup="true"
-              aria-expanded="false">
-              <i class="bx bx-dots-vertical-rounded"></i>
-            </button>
-            <div class="dropdown-menu dropdown-menu-end" aria-labelledby="orederStatistics">
-              <a class="dropdown-item" href="javascript:void(0);">Select All</a>
-              <a class="dropdown-item" href="javascript:void(0);">Refresh</a>
-              <a class="dropdown-item" href="javascript:void(0);">Share</a>
-            </div>
-          </div> --}}
+
         </div>
 
         <div class="card-body">
           <div class="d-flex justify-content-between align-items-center mb-3">
             <div class="d-flex flex-column align-items-center gap-1">
-              {{!-- <h2 class="mb-2">8,258</h2>
-              <span>Total Orders</span> --}}
-
-
             </div>
 
             <canvas id="pieChart" style="width:100%;max-width:250px"></canvas>
             <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.4.0/Chart.min.js"></script>
             <script>
-
               const getDataTour = async () => {
                 let response = await fetch(`http://localhost:3001/tour`);
                 let data = await response.json();
+                let items = [
+                  {
+                    name: 'TMB', count: 0
+                  },
+                  {
+                    name: 'TMT', count: 0
+                  },
+                  {
+                    name: 'TNB', count: 0
+                  },
+                  {
+                    name: 'DNB', count: 0
+                  }
+                ]
+
+                for (let i = 0; i < items.length; i++) {
+
+                  data.map((item) => {
+                    if (item.matour.slice(0, 3) === items[i].name) {
+                      items[i].count++;
+                    }
+                  })
                 }
-
-
-              new Chart("pieChart", {
-                type: "pie",
-                data: {
-                  labels: [
-                    'Tour Miền Bắc',
-                    'Tour Miền Trung',
-                    'Tour Miền Tây Nam Bộ',
-                    'Tour Miền Đông Nam Bộ',
-                  ],
-                  datasets: [{
-                    label: 'My First Dataset',
-                    data: [300, 50, 100],
-                    backgroundColor: [
-                      'rgb(255, 99, 132)',
-                      'rgb(54, 162, 235)',
-                      'rgb(255, 205, 86)'
+                return items;
+              }
+              getDataTour().then((data) => {
+                new Chart("pieChart", {
+                  type: "pie",
+                  data: {
+                    labels: [
+                      'Tour Miền Bắc',
+                      'Tour Miền Trung',
+                      'Tour Miền Tây Nam Bộ',
+                      'Tour Miền Đông Nam Bộ',
                     ],
-                    hoverOffset: 4
-                  }]
-                }
-              });
+                    datasets: [{
+                      label: 'My First Dataset',
+                      data: data.map((data) => data.count),
+                      backgroundColor: [
+                        'rgb(255, 99, 132)',
+                        'rgb(54, 162, 235)',
+                        'rgb(255, 205, 86)'
+                      ],
+                      hoverOffset: 4
+                    }]
+                  }
+                });
+              })
+
             </script>
           </div>
+
+
           <ul class="p-0 m-0">
             <li class="d-flex mb-4 pb-1">
               <div class="avatar flex-shrink-0 me-3">
                 <span class="avatar-initial rounded bg-label-primary"><i class="bx bx-mobile-alt"></i></span>
               </div>
               <div class="d-flex w-100 flex-wrap align-items-center justify-content-between gap-2">
+
                 <div class="me-2">
-                  <h6 class="mb-0">Electronic</h6>
-                  <small class="text-muted">Mobile, Earbuds, TV</small>
+                  <h6 class="mb-0">Tour Miền Bắc</h6>
+                  <small class="text-muted">
+                    Hà Nội, Hải Phòng,...
+                  </small>
                 </div>
                 <div class="user-progress">
-                  <small class="fw-semibold">82.5k</small>
+                  <small class="fw-semibold" id="demo">
+                  </small>
+                  <script>
+                    getDataTour().then((data) => {
+                      data[0].name
+                      document.getElementById("demo").innerHTML = data[0].count;
+                    })
+
+                  </script>
                 </div>
               </div>
             </li>
+
             <li class="d-flex mb-4 pb-1">
               <div class="avatar flex-shrink-0 me-3">
                 <span class="avatar-initial rounded bg-label-success"><i class="bx bx-closet"></i></span>
               </div>
               <div class="d-flex w-100 flex-wrap align-items-center justify-content-between gap-2">
                 <div class="me-2">
-                  <h6 class="mb-0">Fashion</h6>
-                  <small class="text-muted">T-shirt, Jeans, Shoes</small>
+                  <h6 class="mb-0">Tour Miền Trung</h6>
+                  <small class="text-muted">Huế, Đà Nẵng, Quảng Nam,...</small>
                 </div>
                 <div class="user-progress">
-                  <small class="fw-semibold">23.8k</small>
+                  <small class="fw-semibold" id="mt"></small>
+                  <script>
+                    getDataTour().then((data) => {
+                      data[0].name
+                      document.getElementById("mt").innerHTML = data[1].count;
+                    })
+
+                  </script>
                 </div>
               </div>
             </li>
+
             <li class="d-flex mb-4 pb-1">
               <div class="avatar flex-shrink-0 me-3">
                 <span class="avatar-initial rounded bg-label-info"><i class="bx bx-home-alt"></i></span>
               </div>
               <div class="d-flex w-100 flex-wrap align-items-center justify-content-between gap-2">
                 <div class="me-2">
-                  <h6 class="mb-0">Decor</h6>
-                  <small class="text-muted">Fine Art, Dining</small>
+                  <h6 class="mb-0">Tour Miền Tây Nam Bộ</h6>
+                  <small class="text-muted">Cần Thơ, Bạc Liêu, Sóc Trăng,....</small>
                 </div>
                 <div class="user-progress">
-                  <small class="fw-semibold">849k</small>
+                  <small class="fw-semibold" id="tnb">
+                    <script>
+                      getDataTour().then((data) => {
+                        data[0].name
+                        document.getElementById("tnb").innerHTML = data[2].count;
+                      })
+
+                    </script>
+                  </small>
                 </div>
               </div>
             </li>
+
             <li class="d-flex">
               <div class="avatar flex-shrink-0 me-3">
                 <span class="avatar-initial rounded bg-label-secondary"><i class="bx bx-football"></i></span>
               </div>
               <div class="d-flex w-100 flex-wrap align-items-center justify-content-between gap-2">
                 <div class="me-2">
-                  <h6 class="mb-0">Sports</h6>
-                  <small class="text-muted">Football, Cricket Kit</small>
+                  <h6 class="mb-0">Tour Miền Đông Nam Bộ</h6>
+                  <small class="text-muted">Đồng Nai, TP.Hồ Chí Minh, Côn Đảo,... </small>
                 </div>
                 <div class="user-progress">
-                  <small class="fw-semibold">99</small>
+                  <small class="fw-semibold" id="dnb"></small>
+                  <script>
+                    getDataTour().then((data) => {
+                      data[0].name
+                      document.getElementById("dnb").innerHTML = data[3].count;
+                    })
+
+                  </script>
                 </div>
               </div>
             </li>
@@ -395,27 +545,9 @@
     </div>
     <!--/ Order Statistics -->
 
-
     <!-- Expense Overview -->
-    <div class="col-md-6 col-lg-4 order-1 mb-4">
+    <div class="col-md-12 col-lg-8 order-1 mb-6">
       <div class="card h-100">
-        <div class="card-header">
-          <ul class="nav nav-pills" role="tablist">
-            <li class="nav-item">
-              <button type="button" class="nav-link active" role="tab" data-bs-toggle="tab"
-                data-bs-target="#navs-tabs-line-card-income" aria-controls="navs-tabs-line-card-income"
-                aria-selected="true">
-                Income
-              </button>
-            </li>
-            <li class="nav-item">
-              <button type="button" class="nav-link" role="tab">Expenses</button>
-            </li>
-            <li class="nav-item">
-              <button type="button" class="nav-link" role="tab">Profit</button>
-            </li>
-          </ul>
-        </div>
         <div class="card-body px-0">
           <div class="tab-content p-0">
             <div class="tab-pane fade show active" id="navs-tabs-line-card-income" role="tabpanel">
@@ -424,26 +556,107 @@
                   <img src="../assets/img/icons/unicons/wallet.png" alt="User" />
                 </div>
                 <div>
-                  <small class="text-muted d-block">Total Balance</small>
+                  <small class="text-muted d-block">Thống kê số lượng đăng ký tài khoản trong tháng</small>
                   <div class="d-flex align-items-center">
-                    <h6 class="mb-0 me-1">$459.10</h6>
+                    <h6 class="mb-0 me-1"></h6>
                     <small class="text-success fw-semibold">
-                      <i class="bx bx-chevron-up"></i>
-                      42.9%
+
                     </small>
+
+
                   </div>
+
                 </div>
               </div>
-              <div id="incomeChart"></div>
-              <div class="d-flex justify-content-center pt-4 gap-2">
-                <div class="flex-shrink-0">
-                  <div id="expensesOfWeek"></div>
-                </div>
-                <div>
-                  <p class="mb-n1 mt-1">Expenses This Week</p>
-                  <small class="text-muted">$39 less than last week</small>
-                </div>
-              </div>
+              <canvas id="lineChart" style="width:100%;max-width:800px"></canvas>
+              <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.4.0/Chart.min.js"></script>
+              <script>
+                const get_day_of_month = (year, month) => {
+                  return new Date(year, month, 0).getDate();
+                };
+                const Month = (date) => {
+                  const temp = new Date(date);
+                  return Number(temp.getMonth() + 1);
+                }
+                const getDate = (date) => {
+                  const temp = new Date(date);
+                  return Number(temp.getDate());
+                }
+                const date = new Date();
+                const month = date.getMonth() + 1;
+                const year = date.getFullYear();
+                console.log('số ngày trong tháng này: ', get_day_of_month(year, month));
+                const countDate = get_day_of_month(year, month);
+                let labels = [];
+
+                const getUserAmount = async () => {
+                  let response = await fetch(`http://localhost:3001/taikhoan`);
+                  let data = await response.json();
+
+                  let res = await fetch(`http://localhost:3001/thanhtoan`);
+                  let databill = await res.json();
+
+                  let countSignUp = [];
+                  for (let i = 1; i <= countDate; i++) {
+                    labels.push(i);
+                    countSignUp.push(
+                      {
+                        date: i,
+                        amount: 0,
+                        amountBill: 0,
+                      }
+                    )
+                  }
+
+                  console.log('tháng này:', Month(new Date()));
+
+                  for (let i = 0; i < countSignUp.length; i++) {
+                    data.map((dataItem) => {
+                      if (Month(dataItem.createdAt) === Month(new Date()) && getDate(dataItem.createdAt) === countSignUp[i].date) {
+                        countSignUp[i].amount++;
+
+                      }
+                    })
+                    databill.map((itemData) => {
+                      if (Month(itemData.createdAt) === Month(new Date()) && getDate(itemData.createdAt) === countSignUp[i].date) {
+                        countSignUp[i].amountBill++;
+                      }
+                    })
+                  }
+                  return countSignUp
+                }
+
+                getUserAmount().then((data) => {
+                  new Chart("lineChart", {
+                    type: "line",
+                    data: {
+                      labels: data.map((data) => data.date),
+                      datasets: [
+                        {
+                          label: 'Số lượng đăng ký tài khoản',
+                          data: data.map((data) => data.amount),
+                          fill: false,
+                          borderColor: 'rgb(75, 192, 192)',
+                          tension: 0.1
+                        },
+                        {
+                          label: 'Số lượng đặt tour',
+                          data: data.map((data) => data.amountBill),
+                          fill: false,
+                          borderColor: 'red',
+                          tension: 0.1
+                        }
+                      ]
+
+                    },
+
+                  });
+
+                })
+
+              </script>
+              {{!-- <div id="incomeChart"></div> --}}
+
             </div>
           </div>
         </div>
@@ -452,7 +665,7 @@
     <!--/ Expense Overview -->
 
     <!-- Transactions -->
-    <div class="col-md-6 col-lg-4 order-2 mb-4">
+    {{!-- <div class="col-md-6 col-lg-4 order-2 mb-4">
       <div class="card h-100">
         <div class="card-header d-flex align-items-center justify-content-between">
           <h5 class="card-title m-0 me-2">Transactions</h5>
@@ -563,8 +776,7 @@
           </ul>
         </div>
       </div>
-    </div>
+    </div> --}}
     <!--/ Transactions -->
   </div>
 </div>
-<!-- / Content -->
