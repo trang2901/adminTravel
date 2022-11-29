@@ -20,6 +20,25 @@ class ThanhToanController {
             .get(apiLink + "thanhtoan/" + req.params.id)
             .then(data => {
                 let thanhToan = data.data;
+                console.log('id tour:', thanhToan.id_tour._id)
+                console.log('du khach:', thanhToan.id_tour.du_khach)
+                console.log('du khách trong thanh toán:', thanhToan.du_khach);
+
+                const dukhachTT = thanhToan.du_khach;
+                
+                    axios
+                    .patch(apiLink + "tour/" + thanhToan.id_tour._id, {
+                        du_khach: [
+                            ...dukhachTT.map((it)=>it),
+                            ...thanhToan.id_tour.du_khach.map((item)=>item)
+                          ], 
+                    })
+                    .then(data => {
+                        console.log('>>>>>>>>>>>>> Thành công!!!!!!!!!!!!!'
+                        )
+                    })
+                
+                
                 // handle success
                 if (req.query['_action'] === 'duyet') {
                     thanhToan.trang_thai_duyet = 'ĐÃ DUYỆT';
@@ -30,9 +49,9 @@ class ThanhToanController {
                             res.redirect('back');
                         })
                         .catch(err => console.log(err))
-                }
-                else
-                    res.render('thanhToan/kyThanhToanTable', { apiLink, thanhtoan: data.data })
+                    }
+                    else
+                        res.render('thanhToan/kyThanhToanTable', { apiLink, thanhtoan: data.data })
             })
             .catch(err => console.log(err))
     }
@@ -74,7 +93,6 @@ class ThanhToanController {
                 axios
                     .get(apiLink + 'dukhach/')
                     .then(({ data }) => {
-
                         for (let i = 0; i < arrDuKhach.length; i++) {
                             for (let it = 0; it < data.length; it++) {
                                 if (data[it]._id === arrDuKhach[i]) {

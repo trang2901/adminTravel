@@ -36,6 +36,7 @@ class TourController {
       })
       .catch(err => res.json(err))
   }
+
   // [GET] /tour/addLichTrinhForm
   addLichTrinhForm(req, res) {
     axios
@@ -46,6 +47,7 @@ class TourController {
       })
       .catch(err => res.json(err))
   }
+
   // [GET] /tour/updateInfoForm?_slug
   updateInfoForm(req, res) {
     Promise.all([
@@ -85,6 +87,7 @@ class TourController {
       })
       .catch(err => res.json(err))
   }
+  
   // [PATCH] /tour/:id
   update(req, res) {
     axios
