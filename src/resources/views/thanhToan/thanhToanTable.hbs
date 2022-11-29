@@ -14,6 +14,7 @@
             <th class="text-primary">Thành Tiền (VND)</th>
             <th class="text-primary">Trạng Thái</th>
             <th class="text-primary">Người Duyệt</th>
+            <th class="text-primary">Du khách</th>
             <th class="text-primary">Hành Động</th>
           </tr>
         </thead>
@@ -37,28 +38,48 @@
               </span>
             </td>
             <td>{{this.nguoi_duyet.ho_ten}}</td>
+            
             <td>
-              <div class="dropdown">
+              {{!-- <div class="dropdown">
                 <button type="button" class="btn p-0 dropdown-toggle hide-arrow" data-bs-toggle="dropdown">
                   <i class="bx bx-dots-vertical-rounded"></i>
-                </button>
+                </button> --}}
 
-                <div class="dropdown-menu">
+                <class="dropdown-menu">
                   {{#if (ifEq this.trang_thai_duyet "Chưa duyệt")}}
                   <a class="dropdown-item" href="/thanhtoan/{{this._id}}?_action=duyet"><i class="bx bx-edit"></i>
-                    Duyệt</a> 
-                    {{/if}}
-                  <a class="dropdown-item" href="/thanhtoan/{{this._id}}"><i class="bx bx-file-find"></i>
-                    Kỳ Thanh Toán</a>
+                    Duyệt
+                  </a> 
+
                   <a class="dropdown-item" href="javascript:void(0);" data-bs-toggle="modal"
                     data-bs-target="#modal-delete" data-id="{{this._id}}" data-name="thanh toán này"
-                    data-collection="thanhtoan"><i class="bx bx-trash me-1"></i>
-                    Xóa</a>
+                    data-collection="thanhtoan">
+                    <i class="bx bx-trash me-1"></i>
+                    Xóa
+                  </a>
+
+                  <script>
+                    
+                  </script>
+                  {{/if}}
+                  
+
+                  {{!-- <a class="dropdown-item" href="/thanhtoan/{{this._id}}"><i class="bx bx-file-find"></i>
+                    Kỳ Thanh Toán
+                  </a> --}}
+
+              
+
                 </div>
                 
               </div>
             </td>
           </tr>
+          {{#each this.du_khach}}
+          <p>{{this._id}}</p>
+          {{/each}}
+
+
           {{/each}}
 
         </tbody>
@@ -99,42 +120,3 @@
 <form action="" method="post" name="delete-form">
 </form>
 
-<p>Thống kê doanh thu theo tháng</p>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.5.0/Chart.min.js"></script>
-<canvas id="myChart" style="width:100%;max-width:600px"></canvas>
-{{#each thanhtoans}}
-<script>
-var xValues = [1,2,3,4,5,6,7,8,9,10,11,12];
-var yValues = [3,2,5,6,7,5,44,3,2,4,5,3,2];
-var barColors = ["red", "green","blue","orange","brown"];
-
-new Chart("myChart", {
-  type: "bar",
-  data: {
-    labels: xValues,
-    datasets: [{
-      backgroundColor: barColors,
-      data: yValues
-    }]
-  },
-  options: {
-    legend: {display: false},
-    title: {
-      display: true,
-      text: "World Wine Production 2018"
-    }
-  }
-});
-</script>
-{{/each}}
-<p>test tính tổng</p>
-{{#each thanhtoans}}
-<p>{{this.thanh_tien}}</p>
-<script>
-  var string = {{convertObjToStr this.thanh_tien}}
-</script>
-{{!-- <p>{{sumArray array}}</p> --}}
-<p>{{convertStrToInt (convertObjToStr this.thanh_tien) }}</p>
-<p>{{convertObjToStr this.thanh_tien}}</p>
-<p>----------------------------------------------</p>
-{{/each}}

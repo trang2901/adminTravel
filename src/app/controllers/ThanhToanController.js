@@ -19,13 +19,13 @@ class ThanhToanController {
         axios
             .get(apiLink + "thanhtoan/" + req.params.id)
             .then(data => {
-                let thanhToan=data.data;
+                let thanhToan = data.data;
                 // handle success
                 if (req.query['_action'] === 'duyet') {
-                    thanhToan.trang_thai_duyet='ĐÃ DUYỆT';
-                    thanhToan.nguoi_duyet=req.session.idAdmin;
+                    thanhToan.trang_thai_duyet = 'ĐÃ DUYỆT';
+                    thanhToan.nguoi_duyet = req.session.idAdmin;
                     axios
-                        .put(apiLink + "thanhtoan/"+ req.params.id,thanhToan)
+                        .put(apiLink + "thanhtoan/" + req.params.id, thanhToan)
                         .then(data => {
                             res.redirect('back');
                         })
@@ -66,10 +66,34 @@ class ThanhToanController {
     // [DELETE] /ThanhToan/:id
     delete(req, res) {
         axios
-            .delete(apiLink + 'thanhtoan/' + req.params.id)
-            .then(data => {
-                res.redirect('/thanhtoan');
-            });
+            .get(apiLink + 'thanhtoan/' + req.params.id)
+            .then(({ data }) => {
+                const arrDuKhach = data.du_khach;
+                console.log('data', arrDuKhach);
+
+                axios
+                    .get(apiLink + 'dukhach/')
+                    .then(({ data }) => {
+
+                        for (let i = 0; i < arrDuKhach.length; i++) {
+                            for (let it = 0; it < data.length; it++) {
+                                if (data[it]._id === arrDuKhach[i]) {
+                                    axios
+                                        .delete(apiLink + 'dukhach/' + data[it]._id)
+                                        .then(data => {
+                                            // console.log('>>>>>>>>>>>>>>>>>>>>>>xóa thành công')
+                                        })
+                                }
+                            }
+                        }
+                        axios
+                            .delete(apiLink + 'thanhtoan/' + req.params.id)
+                            .then(data => {
+                                res.redirect('/thanhtoan');
+                            });
+                    })
+            })
+
     }
 }
 

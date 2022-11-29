@@ -7,6 +7,7 @@ const khachHangRouter=require('./khachHang');
 const dashBoardRouter=require('./dashBoard');
 const thanhToanRouter=require('./thanhToan');
 const kyThanhToanRouter=require('./kyThanhToan');
+const DuKhachRouter = require('./dukhach')
 const loginRouter=require('./login');
 const path=require('path');
 const middleware=require('../helpers/middleware');
@@ -17,6 +18,7 @@ const requiresLogin=middleware.requiresLogin;
 function route(app){
     app.use('/login',loginRouter);
     app.use('/tour',requiresLogin,tourRouter);
+    app.use('/dukhach', requiresLogin,DuKhachRouter);
     app.use('/lichtrinh',requiresLogin,lichTrinhRouter);
     app.use('/diadiem',requiresLogin,diaDiemRouter);
     app.use('/admin',requiresLogin,adminRouter);
