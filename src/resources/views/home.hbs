@@ -162,7 +162,7 @@
                 }
                 let sumTest = 0;
                 SumBill().then((data) => {
-                    console.log('huhuuuh', data);
+                    
                     for(let p = 0; p<data.length; p++){
                       sumTest += data[p].amountBill
                     }
@@ -342,7 +342,7 @@
                   sumYear().then((data) => {
                     data.map((it) => {
                         sum1 += it.amount;
-                        console.log(data);
+                        
                         document.getElementById("sumYear").innerHTML = formatPrices(sum1)
 
                     })
@@ -395,23 +395,24 @@
                 let data = await response.json();
                 let items = [
                   {
-                    name: 'TMB', count: 0
+                    name: 'Tour Miền Bắc', count: 0
                   },
                   {
-                    name: 'TMT', count: 0
+                    name: 'Tour Miền Trung', count: 0
                   },
                   {
-                    name: 'TNB', count: 0
+                    name: 'Tour Miền Tây Nam Bộ', count: 0
                   },
                   {
-                    name: 'DNB', count: 0
+                    name: 'Tour Miền Đông Nam Bộ', count: 0
                   }
                 ]
 
                 for (let i = 0; i < items.length; i++) {
 
                   data.map((item) => {
-                    if (item.matour.slice(0, 3) === items[i].name) {
+                    
+                    if (item.loai_tour.ten_loai_tour == items[i].name) {
                       items[i].count++;
                     }
                   })
@@ -585,7 +586,7 @@
                 const date = new Date();
                 const month = date.getMonth() + 1;
                 const year = date.getFullYear();
-                console.log('số ngày trong tháng này: ', get_day_of_month(year, month));
+            
                 const countDate = get_day_of_month(year, month);
                 let labels = [];
 
@@ -608,7 +609,7 @@
                     )
                   }
 
-                  console.log('tháng này:', Month(new Date()));
+                 
 
                   for (let i = 0; i < countSignUp.length; i++) {
                     data.map((dataItem) => {

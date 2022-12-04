@@ -4,7 +4,7 @@
   <!-- Table -->
 
   <div class="card">
-    <h5 class="card-header text-info">Danh Sách Thanh Toán</h5>
+    <h5 class="card-header text-info">Danh Sách Đơn Chưa Duyệt</h5>
     <div class="table-responsive text-nowrap">
       <table class="table">
         <thead>
@@ -14,12 +14,13 @@
             <th class="text-primary">Thành Tiền (VND)</th>
             <th class="text-primary">Trạng Thái</th>
             <th class="text-primary">Người Duyệt</th>
-            <th class="text-primary">Du khách</th>
+            <th class="text-primary">Trạng Thái Thanh Toán</th>
             <th class="text-primary">Hành Động</th>
           </tr>
         </thead>
         <tbody class="table-border-bottom-0">
           {{#each thanhtoans}}
+          {{#if (ifEq this.trang_thai_duyet "Chưa duyệt")}}
           <tr>
             <td><i class="fab fa-angular fa-lg text-danger me-3"></i>
               <strong>{{this.id_khach_hang.ho_ten}}</strong>
@@ -28,17 +29,14 @@
             <td>{{this.thanh_tien}}</td>
             <td>
               <span class="badge 
-              {{#if (ifEq this.trang_thai_duyet "Chưa duyệt")}}
-              bg-label-danger
-              {{else}}
-              bg-label-primary
-              {{/if}}
-               me-1">
+              {{#if (ifEq this.trang_thai_duyet " Chưa duyệt")}} bg-label-danger {{else}} bg-label-primary {{/if}}
+                me-1">
                 {{this.trang_thai_duyet}}
               </span>
+
             </td>
             <td>{{this.nguoi_duyet.ho_ten}}</td>
-            
+            <td>{{this.trang_thai_thanh_toan}}</td>
             <td>
               {{!-- <div class="dropdown">
                 <button type="button" class="btn p-0 dropdown-toggle hide-arrow" data-bs-toggle="dropdown">
@@ -49,7 +47,7 @@
                   {{#if (ifEq this.trang_thai_duyet "Chưa duyệt")}}
                   <a class="dropdown-item" href="/thanhtoan/{{this._id}}?_action=duyet"><i class="bx bx-edit"></i>
                     Duyệt
-                  </a> 
+                  </a>
 
                   <a class="dropdown-item" href="javascript:void(0);" data-bs-toggle="modal"
                     data-bs-target="#modal-delete" data-id="{{this._id}}" data-name="thanh toán này"
@@ -59,38 +57,210 @@
                   </a>
 
                   <script>
-                    
+
                   </script>
                   {{/if}}
-                  
 
-                  {{!-- <a class="dropdown-item" href="/thanhtoan/{{this._id}}"><i class="bx bx-file-find"></i>
+{{!-- 
+                  <a class="dropdown-item" href="/thanhtoan/{{this._id}}"><i class="bx bx-file-find"></i>
                     Kỳ Thanh Toán
                   </a> --}}
 
-              
 
-                </div>
-                
+
               </div>
-            </td>
-          </tr>
-          {{#each this.du_khach}}
-          <p>{{this._id}}</p>
-          {{/each}}
 
-
-          {{/each}}
-
-        </tbody>
-      </table>
     </div>
-  </div>
-  <!-- /Table -->
+    </td>
+    </tr>
+    {{/if}}
+    {{/each}}
 
+    </tbody>
+    </table>
+  </div>
+</div>
+<p></p>
+
+<!-- /Table chauw thanh toán -->
+<div class="card">
+  <h5 class="card-header text-info">Danh Sách Khách Hàng Chưa Thanh Toán</h5>
+  <div class="table-responsive text-nowrap">
+    <table class="table">
+      <thead>
+        <tr>
+          <th class="text-primary">Họ Tên</th>
+          <th class="text-primary">Tour</th>
+          <th class="text-primary">Thành Tiền (VND)</th>
+          <th class="text-primary">Trạng Thái</th>
+          <th class="text-primary">Người Duyệt</th>
+          <th class="text-primary">Trạng Thái Thanh Toán</th>
+          <th class="text-primary">Hạn thanh toán</th>
+          <th class="text-primary">Hành Động</th>
+        </tr>
+      </thead>
+      <tbody class="table-border-bottom-0">
+        {{#each thanhtoans}}
+        {{#if (ifEq this.trang_thai_duyet "ĐÃ DUYỆT")}}
+        {{#if (ifEq this.trang_thai_thanh_toan "Chưa thanh toán")}}
+        <tr>
+          <td><i class="fab fa-angular fa-lg text-danger me-3"></i>
+            <strong>{{this.id_khach_hang.ho_ten}}</strong>
+          </td>
+          <td>{{this.id_tour.ten}}</td>
+          <td>{{this.thanh_tien}}</td>
+          <td>
+            <span class="badge 
+              {{#if (ifEq this.trang_thai_duyet " Chưa duyệt")}} bg-label-danger {{else}} bg-label-success {{/if}}
+              me-1">
+              {{this.trang_thai_duyet}}
+            </span>
+          </td>
+          <td>{{this.nguoi_duyet.ho_ten}}</td>
+          <td>
+            <span class="badge 
+              {{#if (ifEq this.trang_thai_thanh_toan " Chưa thanh toán")}} bg-label-danger {{else}} bg-label-primary
+              {{/if}} me-1">
+              {{this.trang_thai_thanh_toan}}
+            </span>
+          </td>
+
+          <td>
+             
+              <p
+              style="color:{{#if (ifEq this.trang_thai_han_thanh_toan "Đã hết hạn thanh toán")}} red {{else}} green
+              {{/if}} "
+              >{{this.trang_thai_han_thanh_toan}}</p>
+          
+          </td>
+          </div>
+          <script> 
+          const datane = async () => {
+          let response = await fetch(`http://localhost:3001/thanhtoan`);
+          let data = await response.json();
+          return data;    
+        }
+        datane().then((data)=>{
+            console.log('data nè mày: ', data);
+            data.map((item)=>{
+                console.log('ngày tt:',item.id_tour.ngay_thanh_toan_cuoi_cung )
+            if(item.trang_thai_thanh_toan === 'Chưa thanh toán' && Number(new Date(item.id_tour.ngay_thanh_toan_cuoi_cung)) < Number(new Date())){
+            let url =  `http://localhost:3001/thanhtoan/${item._id}`;
+           
+            let options = {
+              method: 'PUT',
+              headers: {'Content-Type': 'application/json'},
+              body: JSON.stringify({trang_thai_han_thanh_toan: 'Đã hết hạn thanh toán'})
+            }
+              fetch(url, options)
+              .then((respone) => console.log(respone.status) )
+            }
+
+          })  
+            })
+                  
+         </script>
+
+
+
+
+          <td>
+            {{#if (ifEq this.trang_thai_thanh_toan "Chưa thanh toán")}}
+            <a class="dropdown-item" href="/thanhtoan/{{this._id}}?_action=dathanhtoan"><i class="bx bx-edit"></i>
+              Đã thanh toán
+            </a>
+            {{/if}}
+            <a class="dropdown-item" href="javascript:void(0);" data-bs-toggle="modal" data-bs-target="#modal-delete"
+              data-id="{{this._id}}" data-name="thanh toán này" data-collection="thanhtoan">
+              <i class="bx bx-trash me-1"></i>
+              Xóa
+            </a>
+          </td>
+        </tr>
+        {{/if}}
+        {{/if}}
+        {{/each}}
+
+      </tbody>
+    </table>
+  </div>
+</div>
+<p></p>
+
+
+
+
+
+
+{{!-- table khách hàng đã thanh toaasn------------------------------------------ --}}
+<div class="card">
+  <h5 class="card-header text-info">Danh Sách Khách Hàng Đã Thanh Toán</h5>
+  <div class="table-responsive text-nowrap">
+    <table class="table">
+      <thead>
+        <tr>
+          <th class="text-primary">Họ Tên</th>
+          <th class="text-primary">Tour</th>
+          <th class="text-primary">Thành Tiền (VND)</th>
+          <th class="text-primary">Trạng Thái</th>
+          <th class="text-primary">Người Duyệt</th>
+          <th class="text-primary">Trạng Thái Thanh Toán</th>
+          {{!-- <th class="text-primary">Ngày Hết Hạn Thanh Toán</th>
+          <th class="text-primary">Hành Động</th> --}}
+        </tr>
+      </thead>
+      <tbody class="table-border-bottom-0">
+        {{#each thanhtoans}}
+        {{#if (ifEq this.trang_thai_duyet "ĐÃ DUYỆT")}}
+        {{#if (ifEq this.trang_thai_thanh_toan "Đã thanh toán")}}
+        <tr>
+          <td><i class="fab fa-angular fa-lg text-danger me-3"></i>
+            <strong>{{this.id_khach_hang.ho_ten}}</strong>
+          </td>
+          <td>{{this.id_tour.ten}}</td>
+          <td>{{this.thanh_tien}}</td>
+          <td>
+            <span class="badge 
+              {{#if (ifEq this.trang_thai_duyet " Chưa duyệt")}} bg-label-danger {{else}} bg-label-success {{/if}}
+              me-1">
+              {{this.trang_thai_duyet}}
+            </span>
+          </td>
+          <td>{{this.nguoi_duyet.ho_ten}}</td>
+          <td>{{this.trang_thai_thanh_toan}}</td>
+          {{!-- <td>{{this.id_tour.ngay_thanh_toan_cuoi_cung}}</td> --}}
+          {{!-- <td> --}}
+            {{!-- <div class="dropdown">
+              <button type="button" class="btn p-0 dropdown-toggle hide-arrow" data-bs-toggle="dropdown">
+                <i class="bx bx-dots-vertical-rounded"></i>
+              </button> --}}
+
+              {{!-- <class="dropdown-menu">
+                <a class="dropdown-item" href="javascript:void(0);" data-bs-toggle="modal"
+                  data-bs-target="#modal-delete" data-id="{{this._id}}" data-name="thanh toán này"
+                  data-collection="thanhtoan">
+                  <i class="bx bx-trash me-1"></i>
+                  Xóa
+                </a>
+            </div>
+
+  </div>
+  </td> --}}
+  </tr>
+  {{/if}}
+  {{/if}}
+  {{/each}}
+
+  </tbody>
+  </table>
+</div>
+</div>
 </div>
 
-<!-- Modal Delete-->
+<!--Table limit -->
+
+<!--==========================================================-->
+<!-- Modal Delete==========================================================================================================-->
 <div class="modal fade " id="modal-delete" aria-labelledby="modalToggleLabel" tabindex="-1" style="display: none"
   aria-hidden="true">
   <div class="modal-dialog modal-dialog-centered">
@@ -119,4 +289,3 @@
 {{!-- Delete hidden form --}}
 <form action="" method="post" name="delete-form">
 </form>
-

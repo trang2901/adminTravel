@@ -9,6 +9,7 @@ module.exports = {
     plus: (a , b) => a * b,
 
     ifEq:(a,b)=>a==b,
+    ifLH: (a,b) => a>b,
 
     for: function(from, to, incr, block) {
         var accum = '';

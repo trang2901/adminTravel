@@ -8,9 +8,7 @@
   <div class="row">
     <div class="col-xl">
       <div class="card mb-4">
-        <div
-          class="card-header d-flex justify-content-between align-items-center"
-        >
+        <div class="card-header d-flex justify-content-between align-items-center">
           <h5 class="mb-0">Thông Tin Cho Tour Mới</h5>
           <small class="text-muted float-end">Thêm</small>
         </div>
@@ -21,230 +19,187 @@
                 Tour</label>
               <div class="input-group">
                 <span class="input-group-text" id="basic-addon11">@</span>
-                <input
-                  required
-                  name="ten"
-                  type="text"
-                  class="form-control"
-                  placeholder="Núi Phú Sĩ - Hokkado - Akihabara"
-                  aria-describedby="basic-addon11"
-                />
+                <input required name="ten" type="text" class="form-control"
+                  placeholder="Núi Phú Sĩ - Hokkado - Akihabara" aria-describedby="basic-addon11" />
               </div>
             </div>
 
             <div class="mb-3">
-              <label class="form-label" for="basic-icon-default-fullname">
-              Mã Tour</label>
-              <div class="input-group">
-                <span class="input-group-text" id="basic-addon11">@</span>
-                <input
-                  required
-                  name="matour"
-                  type="text"
-                  class="form-control"
-                  placeholder="T001MH"
-                  aria-describedby="basic-addon11"
-                />
-              </div>
+              <label class="form-label" for="defaultSelect">Mã tour</label>
+                        <div class="input-group input-group-merge">
+                          <span class="input-group-text"><i class="bx bx-user-voice"></i></span>
+                            <select name="loai_tour" id="defaultSelect" class="form-select">
+                            <option hidden>----Chọn Mã Tour----</option>
 
+                            {{#each loaitours}}
+                                <option value="{{this._id}}">{{this.ten_loai_tour}}</option>
+                            {{/each}}
+
+                          </select>
+
+                        </div>
+
+
+              {{!-- mã
+              tour--------------------------------------------------------------------------------------------------------------------
+              --}}
               <div class="mb-3">
-              <label class="form-label" for="basic-icon-default-fullname">
-              Khách Sạn</label>
-              <div class="input-group">
-                <span class="input-group-text" id="basic-addon11">
-                  <i class="bx bx-hotel"></i>
-                </span>
-                <input
-                  required
-                  name="khachsan"
-                  type="text"
-                  class="form-control"
-                  placeholder=" "
-                  aria-describedby="basic-addon11"
-                />
-              </div>
-
-              <div class="mb-3">
-              <label class="form-label" for="basic-icon-default-fullname">
-              Điểm Khởi Hành</label>
-              <div class="input-group">
-                <span class="input-group-text" id="basic-addon11">
-                  <i class="bx bxs-plane-take-off"></i>
-                </span>
-                <input
-                  required
-                  name="diemkhoihanh"
-                  type="text"
-                  class="form-control"
-                  placeholder=" "
-                  aria-describedby="basic-addon11"
-                />
-              </div>
-  <div class="mb-3">
-              <label class="form-label" for="basic-icon-default-fullname">
-              Thời gian cụ thể</label>
-              <div class="input-group">
-                <span class="input-group-text" id="basic-addon11">
-                  <i class="bx bx-time"></i>
-                </span>
-                <input
-                  required
-                  name="thoigian"
-                  type="text"
-                  class="form-control"
-                  placeholder="2 ngày 1 đêm"
-                  aria-describedby="basic-addon11"
-                />
-              </div>
-
-
-              <div class="mb-3">
-              <label class="form-label" for="basic-icon-default-fullname">
-              Phương Tiện</label>
-              <div class="input-group">
-                <span class="input-group-text" id="basic-addon11">
-                  <i
-                    class="bx bx-car"
-                  ></i>
-                </span>
-                <input
-                  required
-                  name="phuongtien"
-                  type="text"
-                  class="form-control"
-                  placeholder="Ô tô, xe du lịch"
-                  aria-describedby="basic-addon11"
-                />
-              </div> 
-
-            </div>
-           
-          <div class="mb-3">
-              <label class="form-label" for="basic-icon-default-fullname">
-              Ẩm Thực</label>
-              <div class="input-group">
-                <span class="input-group-text" id="basic-addon11">
-                   <i
-                    class="bx bx-food-menu"
-                  ></i>
+                <label class="form-label" for="basic-icon-default-fullname">
+                  Khách Sạn</label>
+                <div class="input-group">
+                  <span class="input-group-text" id="basic-addon11">
+                    <i class="bx bx-hotel"></i>
                   </span>
-                <input
-                  required
-                  name="amthuc"
-                  type="text"
-                  class="form-control"
-                  placeholder="T001MH"
-                  aria-describedby="basic-addon11"
-                />
-              </div> 
-              <div class="mb-3">
-              <label class="form-label" for="basic-icon-default-fullname">
-              Điểm nổi bật</label>
-              <div class="input-group">
-                <span class="input-group-text" id="basic-addon11">
-                   <i
-                    class="bx bx-food-menu"
-                  ></i>
-                  </span>
-                <input
-                  required
-                  name="diemnoibat"
-                  type="text"
-                  class="form-control"
-                  placeholder="T001MH"
-                  aria-describedby="basic-addon11"
-                />
-              </div> 
-            </div>
-            <div class="mb-3">
-              <label class="form-label" for="basic-icon-default-fullname">Ngày
-                Khởi Hành</label>
-              <div class="input-group input-group-merge">
-                <span
-                  id="basic-icon-default-fullname2"
-                  class="input-group-text"
-                ><i class="bx bxs-plane-take-off"></i></span>
-                <input
-                  required
-                  name="khoi_hanh"
-                  class="form-control"
-                  type="date"
-                  value="2021-06-18"
-                  id="html5-date-input"
-                />
-              </div>
-            </div>
-            <div class="mb-3">
-              <label class="form-label" for="basic-icon-default-company">Thời
-                Gian Du Lịch</label>
-              <div class="input-group input-group-merge">
-                <span
-                  id="basic-icon-default-company2"
-                  class="input-group-text"
-                ><i class="bx bx-time"></i></span>
-                <input
-                  required
-                  name="so_ngay"
-                  class="form-control"
-                  type="number"
-                  value="10"
-                  id="html5-number-input"
-                />
-              </div>
-            </div>
-            <div class="mb-3">
-              <label class="form-label" for="basic-icon-default-email">Tổng Số
-                Ghế</label>
-              <div class="input-group input-group-merge">
-                <span class="input-group-text">
-                  <i
-                    class="bx bx-chair"
-                  ></i></span>
-                <input
-                  required
-                  name="so_cho"
-                  class="form-control"
-                  type="number"
-                  value="18"
-                  id="html5-number-input"
-                />
-              </div>
-            </div>
-            <div class="mb-3">
-              <label class="form-label" for="defaultSelect">Người Hướng Dẫn</label>
-              <div class="input-group input-group-merge">
-                <span class="input-group-text"><i
-                    class="bx bx-user-voice"
-                  ></i></span>
-                <select name="nguoi_hd" id="defaultSelect" class="form-select">
-                  <option hidden>---Chọn Người Hướng Dẫn---</option>
-                  {{#each huongdanviens}}
-                  <option value="{{this._id}}">{{this.ho_ten}}</option>
-                  {{/each}}
-                </select>
-              </div>
-            </div>
-            <div class="mb-3">
-              <label class="form-label" for="basic-icon-default-message">Giá Vé</label>
-              <div class="input-group input-group-merge">
-                <span class="input-group-text"><i
-                    class="bx bx-purchase-tag-alt"
-                  ></i>VND
-                </span>
-                <input
-                  required
-                  name="gia"
-                  type="text"
-                  class="form-control"
-                  placeholder="10000000"
-                  aria-label="Amount (to the nearest dollar)"
-                />
-                <span class="input-group-text">.00</span>
-              </div>
-            </div>
-            <button type="submit" class="btn btn-primary">
-              Tạo Tour
-            </button>
+                  <input required name="khachsan" type="text" class="form-control" placeholder=" "
+                    aria-describedby="basic-addon11" />
+                </div>
+
+                <div class="mb-3">
+                  <label class="form-label" for="basic-icon-default-fullname">
+                    Điểm Khởi Hành</label>
+                  <div class="input-group">
+                    <span class="input-group-text" id="basic-addon11">
+                      <i class="bx bxs-plane-take-off"></i>
+                    </span>
+                    <input required name="diemkhoihanh" type="text" class="form-control" placeholder=" "
+                      aria-describedby="basic-addon11" />
+                  </div>
+                  <div class="mb-3">
+                    <label class="form-label" for="basic-icon-default-fullname">
+                      Thời gian cụ thể</label>
+                    <div class="input-group">
+                      <span class="input-group-text" id="basic-addon11">
+                        <i class="bx bx-time"></i>
+                      </span>
+                      <input required name="thoigian" type="text" class="form-control" placeholder="2 ngày 1 đêm"
+                        aria-describedby="basic-addon11" />
+                    </div>
+
+
+                    <div class="mb-3">
+                      <label class="form-label" for="basic-icon-default-fullname">
+                        Phương Tiện</label>
+                      <div class="input-group">
+                        <span class="input-group-text" id="basic-addon11">
+                          <i class="bx bx-car"></i>
+                        </span>
+                        <input required name="phuongtien" type="text" class="form-control"
+                          placeholder="Ô tô, xe du lịch" aria-describedby="basic-addon11" />
+                      </div>
+
+                    </div>
+
+                    <div class="mb-3">
+                      <label class="form-label" for="basic-icon-default-fullname">
+                        Ẩm Thực</label>
+                      <div class="input-group">
+                        <span class="input-group-text" id="basic-addon11">
+                          <i class="bx bx-food-menu"></i>
+                        </span>
+                        <input required name="amthuc" type="text" class="form-control" placeholder="T001MH"
+                          aria-describedby="basic-addon11" />
+                      </div>
+
+                      <div class="mb-3">
+                        <label class="form-label" for="basic-icon-default-fullname">
+                          Điểm nổi bật</label>
+                        <div class="input-group">
+                          <span class="input-group-text" id="basic-addon11">
+                            <i class="bx bx-food-menu"></i>
+                          </span>
+                          <input required name="diemnoibat" type="text" class="form-control" placeholder="T001MH"
+                            aria-describedby="basic-addon11" />
+                        </div>
+                      </div>
+                      <div class="mb-3">
+
+                        <label class="form-label" for="basic-icon-default-fullname">Ngày
+                          Khởi Hành</label>
+                        <div class="input-group input-group-merge">
+                          <span id="basic-icon-default-fullname2" class="input-group-text"><i
+                              class="bx bxs-plane-take-off"></i></span>
+                          <input required name="khoi_hanh" class="form-control" type="date" value="2021-06-18"
+                            id="html5-date-input" />
+                        </div>
+
+                      </div>
+
+                      <div class="mb-3">
+                        
+                        <label class="form-label" for="basic-icon-default-fullname">
+                          Ngày đăng ký cuối cùng</label>
+                        <div class="input-group input-group-merge">
+                          <span id="basic-icon-default-fullname2" class="input-group-text"><i
+                              class="bx bxs-plane-take-off"></i></span>
+                          <input required name="ngay_dang_ky_cuoi_cung" class="form-control" type="date" value="2022-11-18"
+                            id="html5-date-input" />
+                        </div>
+
+                      </div>
+
+                      <div class="mb-3">
+                        
+                        <label class="form-label" for="basic-icon-default-fullname">
+                          Ngày thanh toán cuối cùng</label>
+                        <div class="input-group input-group-merge">
+                          <span id="basic-icon-default-fullname2" class="input-group-text"><i
+                              class="bx bxs-plane-take-off"></i></span>
+                          <input required name="ngay_thanh_toan_cuoi_cung" class="form-control" type="date" value="2022-11-18"
+                            id="html5-date-input" />
+                        </div>
+
+                      </div>
+
+                      <div class="mb-3">
+                        <label class="form-label" for="basic-icon-default-company">Thời
+                          Gian Du Lịch</label>
+                        <div class="input-group input-group-merge">
+                          <span id="basic-icon-default-company2" class="input-group-text"><i
+                              class="bx bx-time"></i></span>
+                          <input required name="so_ngay" class="form-control" type="number" value="10"
+                            id="html5-number-input" />
+                        </div>
+                      </div>
+                      <div class="mb-3">
+                        <label class="form-label" for="basic-icon-default-email">Tổng Số
+                          Ghế</label>
+                        <div class="input-group input-group-merge">
+                          <span class="input-group-text">
+                            <i class="bx bx-chair"></i></span>
+                          <input required name="so_cho" class="form-control" type="number" value="18"
+                            id="html5-number-input" />
+                        </div>
+                      </div>
+
+                      <div class="mb-3">
+                        <label class="form-label" for="defaultSelect">Người Hướng Dẫn</label>
+                        <div class="input-group input-group-merge">
+                          <span class="input-group-text"><i class="bx bx-user-voice"></i></span>
+                          
+                          
+                          <select name="nguoi_hd" id="defaultSelect" class="form-select">
+                            <option hidden>---Chọn Người Hướng Dẫn---</option>
+                            {{#each huongdanviens}}
+                            <option value="{{this._id}}">{{this.ho_ten}}</option>
+                            {{/each}}
+                          </select>
+
+                        </div>
+                      </div>
+
+                      <div class="mb-3">
+                        <label class="form-label" for="basic-icon-default-message">Giá Vé</label>
+                        <div class="input-group input-group-merge">
+                          <span class="input-group-text"><i class="bx bx-purchase-tag-alt"></i>VND
+                          </span>
+                          <input required name="gia" type="text" class="form-control" placeholder="10000000"
+                            aria-label="Amount (to the nearest dollar)" />
+                          <span class="input-group-text">.00</span>
+                        </div>
+                      </div>
+                      <button type="submit" class="btn btn-primary">
+                        Tạo Tour
+                      </button>
           </form>
         </div>
       </div>

@@ -32,6 +32,7 @@
               </div>
             </div>
             <div class="mb-3">
+
               <label class="form-label" for="basic-icon-default-fullname">Ngày
                 Khởi Hành</label>
               <div class="input-group input-group-merge">
@@ -44,6 +45,42 @@
                   class="form-control"
                   type="date"
                   value="{{tour.khoi_hanh}}"
+                  id="html5-date-input"
+                />
+              </div>
+            </div>
+
+             <div class="mb-3">
+
+              <label class="form-label" for="basic-icon-default-fullname">Ngày đăng ký cuối cùng</label>
+              <div class="input-group input-group-merge">
+                <span
+                  id="basic-icon-default-fullname2"
+                  class="input-group-text"
+                ><i class="bx bxs-plane-take-off"></i></span>
+                <input
+                  name="ngay_dang_ky_cuoi_cung"
+                  class="form-control"
+                  type="date"
+                  value="{{tour.ngay_dang_ky_cuoi_cung}}"
+                  id="html5-date-input"
+                />
+              </div>
+            </div>
+
+<div class="mb-3">
+
+              <label class="form-label" for="basic-icon-default-fullname">Ngày thanh toán cuối cùng</label>
+              <div class="input-group input-group-merge">
+                <span
+                  id="basic-icon-default-fullname2"
+                  class="input-group-text"
+                ><i class="bx bxs-plane-take-off"></i></span>
+                <input
+                  name="ngay_thanh_toan_cuoi_cung"
+                  class="form-control"
+                  type="date"
+                  value="{{tour.ngay_thanh_toan_cuoi_cung}}"
                   id="html5-date-input"
                 />
               </div>
@@ -66,6 +103,25 @@
                 />
               </div>
             </div>
+
+
+            <div class="mb-3">
+              <label class="form-label" for="defaultSelect">Loại Tour</label>
+              <div class="input-group input-group-merge">
+                <span class="input-group-text"><i
+                    class="bx bx-user-voice"
+                  ></i></span>
+                <select name="loai_tour" id="defaultSelect" class="form-select">
+                  <option value="{{tour.loai_tour._id}}" hidden>{{tour.loai_tour.ten_loai_tour}}</option>
+
+                  {{#each loaitours}}
+                    <option value="{{this._id}}">{{this.ten_loai_tour}}</option>
+                  {{/each}}
+                </select>
+              </div>
+            </div>
+
+
             <div class="mb-3">
               <label class="form-label" for="basic-icon-default-fullname">
               Điểm Khởi Hành</label>

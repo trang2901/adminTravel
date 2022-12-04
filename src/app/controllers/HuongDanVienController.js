@@ -15,6 +15,7 @@ class HuongDanVienController {
             .catch(err => console.log(err))
     }
 
+    
     // // [GET] /huongdanvien/id
     // detail(req, res) {
     //     HuongDanVien.findById(req.params.id)

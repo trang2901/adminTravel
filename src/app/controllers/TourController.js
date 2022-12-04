@@ -31,8 +31,13 @@ class TourController {
     axios
       .get(apiLink + "huongdanvien")
       .then(data => {
+        axios
+          .get(apiLink + "loaitour")
+          .then(data1 => {
+            res.render('tours/addTourForm', { huongdanviens: data.data, loaitours: data1.data })
+          })
         // handle success
-        res.render('tours/addTourForm', { huongdanviens: data.data })
+       
       })
       .catch(err => res.json(err))
   }
@@ -54,10 +59,12 @@ class TourController {
       axios
         .get(apiLink + "tour/" + req.query['_slug']),
       axios
-        .get(apiLink + "huongdanvien")
+        .get(apiLink + "huongdanvien"),
+      axios
+        .get(apiLink + "loaitour"),
     ])
-      .then(([data, huongdanviens]) => {
-        res.render('tours/updateInfoForm', { tour: data.data, huongdanviens: huongdanviens.data })
+      .then(([data, huongdanviens, loaitours]) => {
+        res.render('tours/updateInfoForm', { tour: data.data, huongdanviens: huongdanviens.data, loaitours: loaitours.data})
       })
       .catch(err => res.json(err))
 

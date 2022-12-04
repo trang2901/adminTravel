@@ -9,6 +9,7 @@ const thanhToanRouter=require('./thanhToan');
 const kyThanhToanRouter=require('./kyThanhToan');
 const DuKhachRouter = require('./dukhach')
 const loginRouter=require('./login');
+const loaitourRouter = require('./loaiTour')
 const path=require('path');
 const middleware=require('../helpers/middleware');
 const requiresLogin=middleware.requiresLogin;
@@ -27,6 +28,8 @@ function route(app){
     app.use('/',requiresLogin,dashBoardRouter);
     app.use('/thanhtoan',requiresLogin,thanhToanRouter);
     app.use('/kyThanhtoan',requiresLogin,kyThanhToanRouter);
+    app.use('/loaitour', requiresLogin,loaitourRouter);
+    
     app.get('*',(req,res)=>res.render('404'));
 }
 
