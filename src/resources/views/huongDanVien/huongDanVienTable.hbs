@@ -16,7 +16,9 @@
                     <tr>
                         <th class="text-primary">Họ Tên</th>
                         <th class="text-primary">Số Điện Thoại</th>
+                        <th class="text-primary">Giới tính</th>
                         <th class="text-primary">Email</th>
+                        <th class="text-primary">Địa chỉ</th>
                         <th class="text-primary">Số Tour Đảm Nhận</th>
                         <th class="text-primary">Hành Động</th>
                     </tr>
@@ -29,7 +31,9 @@
                             <strong>{{this.ho_ten}}</strong>
                         </td>
                         <td>{{this.sdt}}</td>
+                        <td>{{this.gioi_tinh}}</td>
                         <td>{{this.email}}</td>
+                        <td>{{this.dia_chi}}</td>
                         <td>
                             <span class="badge bg-label-primary me-1">{{this.tour_hd.length}}</span>
                         </td>
@@ -152,15 +156,15 @@
                                 <span id="basic-icon-default-fullname2" class="input-group-text"><i
                                         class="bx bx-user"></i></span>
                                 <input name="ho_ten" type="text" class="form-control" id="basic-icon-default-fullname"
-                                    placeholder="John Doe" aria-label="John Doe"
+                                    placeholder="Nguyen Thi A" aria-label="John Doe"
                                     aria-describedby="basic-icon-default-fullname2">
                             </div>
                         </div>
                         <div class="mb-3">
-                            <label class="form-label" for="username">Username</label>
+                            <label class="form-label" for="username">Tên tài khoản</label>
                             <div class="input-group">
                                 <span class="input-group-text">@</span>
-                                <input name="username" type="text" id="username" class="form-control" placeholder="Username"
+                                <input name="username" type="text" id="username" class="form-control" placeholder="tentaikhoan"
                                     aria-label="Username" aria-describedby="basic-addon11">
                             </div>
                         </div>

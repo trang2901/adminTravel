@@ -13,8 +13,8 @@
         <thead>
           <tr>
             <th class="text-primary">Tên loại tour</th>
-            {{!-- <th class="text-primary">Số Điện Thoại</th>
-            <th class="text-primary">Email</th>
+            <th class="text-primary">Số lượng tour</th>
+            {{!--<th class="text-primary">Email</th>
             <th class="text-primary">Số Tour Đã Đặt</th>
             <th class="text-primary">Hành Động</th> --}}
           </tr>
@@ -25,6 +25,7 @@
             <td><i class="fab fa-angular fa-lg text-danger me-3"></i>
               <strong>{{this.ten_loai_tour}}</strong>
             </td>
+            <td><span class="badge bg-label-primary me-1">{{this.tour_t.length}}</span></td>
             {{!-- <td>........</td>
             <td>.........</td>
             <td><span class="badge bg-label-primary me-1">............</span></td> --}}
@@ -36,6 +37,8 @@
                 <div class="dropdown-menu">
                   {{!-- <a class="dropdown-item" data-bs-toggle="modal" data-bs-target="#modalTourTG{{@index}}"><i
                       class="bx bx-file-find"></i> Tour Đã Đặt</a> --}}
+                    <a class="dropdown-item" data-bs-toggle="modal" data-bs-target="#modalTour{{@index}}"><i
+                                            class="bx bx-file-find"></i>Danh sách tour thuộc loại</a>
                   <a class="dropdown-item" data-bs-toggle="modal" data-bs-target="#modal-delete"data-id="{{this._id}}" data-name="{{this.ten_loai_tour}}"
                                         data-collection="loaitour"><i
                       class="bx bx-trash me-1"></i> Xóa</a>
@@ -43,6 +46,46 @@
               </div>
             </td>
           </tr>
+
+        {{!-- modal --}}
+        <div class="modal fade" id="modalTour{{@index}}" tabindex="-1" style="display: none" aria-hidden="true">
+                        <div class="modal-dialog modal-dialog-centered" role="document">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    {{!-- <h5 class="modal-title" id="modalCenterTitle">
+                                        {{this.ho_ten}}
+                                    </h5> --}}
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                        aria-label="Close"></button>
+                                </div>
+                                <div class="modal-body">
+                                    <div class="card overflow-hidden mb-4" style="height: 330px">
+                                        <h5 class="card-header text-danger">
+                                            <i class="bx bxs-user-check"></i>
+                                            Danh Sách Tour Thuộc Loại Tour
+                                        <div class="card-body ps ps--active-y" id="vertical-example">
+                                            {{#each this.tour_t}}
+                                            <p>{{sum @index 1}}: <a href="/tour/{{this.slug}}">{{this.ten}} </a></p>
+                                            {{/each}}
+                                            <div class="ps__rail-x" style="left: 0px; bottom: 0px">
+                                                <div class="ps__thumb-x" tabindex="0" style="left: 0px; width: 0px">
+                                                </div>
+                                            </div>
+                                            <div class="ps__rail-y" style="top: 0px; height: 232px; right: 0px">
+                                                <div class="ps__thumb-y" tabindex="0" style="top: 0px; height: 40px">
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-primary" data-bs-dismiss="modal">
+                                        Đóng
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
           {{/each}}
 
 
