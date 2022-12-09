@@ -4,7 +4,7 @@ const apiLink = process.env.RESTFULL_API;
 const tags=[
     'Hà Nội',
     'Đà Lạt',
-    'TP HCM',
+    'TP Hồ Chí Minh',
     'Cần Thơ',
     'Vũng Tàu',
     'Nha Trang',
@@ -41,6 +41,7 @@ const tags=[
     'Đồng Nai',
     'Tây Ninh',
     'Củ Chi',
+    'Côn Đảo'
 ]
 class DiaDiemController {
 
