@@ -1,6 +1,6 @@
 <div class="container-xxl flex-grow-1 container-p-y">
   <h4 class="fw-bold py-3 mb-4"><span class="text-muted fw-light">Quản Lý /</span>
-   Đơn hàng</h4>
+    Đơn hàng</h4>
   <!-- Table -->
 
   <div class="card">
@@ -61,7 +61,7 @@
                   </script>
                   {{/if}}
 
-{{!-- 
+                  {{!--
                   <a class="dropdown-item" href="/thanhtoan/{{this._id}}"><i class="bx bx-file-find"></i>
                     Kỳ Thanh Toán
                   </a> --}}
@@ -127,55 +127,54 @@
           </td>
 
           <td>
-             
-              <p
-              style="color:{{#if (ifEq this.trang_thai_han_thanh_toan "Đã hết hạn thanh toán")}} red {{else}} green
+
+            <p style="color:{{#if (ifEq this.trang_thai_han_thanh_toan " Đã hết hạn thanh toán")}} green {{else}} red
               {{/if}} "
               >{{this.trang_thai_han_thanh_toan}}</p>
           
           </td>
           </div>
           <script> 
-          const datane = async () => {
-          let response = await fetch(`http://localhost:3001/thanhtoan`);
-          let data = await response.json();
-          return data;    
-        }
-        datane().then((data)=>{
-            console.log('data nè mày: ', data);
-            data.map((item)=>{
-                console.log('ngày tt:',item.id_tour.ngay_thanh_toan_cuoi_cung )
-            if(item.trang_thai_thanh_toan === 'Chưa thanh toán' && Number(new Date(item.id_tour.ngay_thanh_toan_cuoi_cung)) < Number(new Date())){
-            let url =  `http://localhost:3001/thanhtoan/${item._id}`;
-           
-            let options = {
-              method: 'PUT',
-              headers: {'Content-Type': 'application/json'},
-              body: JSON.stringify({trang_thai_han_thanh_toan: 'Đã hết hạn thanh toán'})
+            const datane = async () => {
+              let response = await fetch(`http://localhost:3001/thanhtoan`);
+              let data = await response.json();
+              return data;
             }
-              fetch(url, options)
-              .then((respone) => console.log(respone.status) )
-            }
+            datane().then((data) => {
+              console.log('data nè mày: ', data);
+              data.map((item) => {
+                console.log('ngày tt:', item.id_tour.ngay_thanh_toan_cuoi_cung)
+                if (item.trang_thai_thanh_toan === 'Chưa thanh toán' && Number(new Date(item.id_tour.ngay_thanh_toan_cuoi_cung)) < Number(new Date())) {
+                  let url = `http://localhost:3001/thanhtoan/${item._id}`;
 
-          })  
+                  let options = {
+                    method: 'PUT',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ trang_thai_han_thanh_toan: 'Đã hết hạn thanh toán' })
+                  }
+                  fetch(url, options)
+                    .then((respone) => console.log(respone.status))
+                }
+
+              })
             })
-                  
-         </script>
+
+          </script>
 
 
 
 
           <td>
-            {{#if (ifEq this.trang_thai_thanh_toan "Chưa thanh toán")}}
-            <a class="dropdown-item" href="/thanhtoan/{{this._id}}?_action=dathanhtoan"><i class="bx bx-edit"></i>
+            {{#if (ifEq this.trang_thai_thanh_toan " Chưa thanh toán")}} <a class="dropdown-item"
+              href="/thanhtoan/{{this._id}}?_action=dathanhtoan"><i class="bx bx-edit"></i>
               Đã thanh toán
-            </a>
-            {{/if}}
-            <a class="dropdown-item" href="javascript:void(0);" data-bs-toggle="modal" data-bs-target="#modal-delete"
-              data-id="{{this._id}}" data-name="thanh toán này" data-collection="thanhtoan">
-              <i class="bx bx-trash me-1"></i>
-              Xóa
-            </a>
+              </a>
+              {{/if}}
+              <a class="dropdown-item" href="javascript:void(0);" data-bs-toggle="modal" data-bs-target="#modal-delete"
+                data-id="{{this._id}}" data-name="thanh toán này" data-collection="thanhtoan">
+                <i class="bx bx-trash me-1"></i>
+                Xóa
+              </a>
           </td>
         </tr>
         {{/if}}
@@ -201,6 +200,7 @@
           <th class="text-primary">Trạng Thái</th>
           <th class="text-primary">Người Duyệt</th>
           <th class="text-primary">Trạng Thái Thanh Toán</th>
+          <th class="text-primary">Hành Động</th>
           {{!-- <th class="text-primary">Ngày Hết Hạn Thanh Toán</th>
           <th class="text-primary">Hành Động</th> --}}
         </tr>
@@ -224,14 +224,14 @@
           </td>
           <td>{{this.nguoi_duyet.ho_ten}}</td>
           <td>{{this.trang_thai_thanh_toan}}</td>
-          {{!-- <td>{{this.id_tour.ngay_thanh_toan_cuoi_cung}}</td> --}}
-          {{!-- <td> --}}
-            {{!-- <div class="dropdown">
-              <button type="button" class="btn p-0 dropdown-toggle hide-arrow" data-bs-toggle="dropdown">
-                <i class="bx bx-dots-vertical-rounded"></i>
-              </button> --}}
-
-              {{!-- <class="dropdown-menu">
+          <td>
+            <div class="dropdown">
+              <class="dropdown-menu">
+                <a class="dropdown-item" href="javascript:void(0);" data-bs-toggle="modal"
+                  data-bs-target="#modalexportbill{{@index}}" data-id="{{this._id}}" data-name="thanh toán này"
+                  data-collection="thanhtoan">
+                  In hóa đơn
+                </a>
                 <a class="dropdown-item" href="javascript:void(0);" data-bs-toggle="modal"
                   data-bs-target="#modal-delete" data-id="{{this._id}}" data-name="thanh toán này"
                   data-collection="thanhtoan">
@@ -239,17 +239,199 @@
                   Xóa
                 </a>
             </div>
-
+          </td>
   </div>
-  </td> --}}
+  </td>
   </tr>
   {{/if}}
   {{/if}}
-  {{/each}}
 
-  </tbody>
-  </table>
+
+
+  {{!-- Modal in hóa đơn =================================================================--}}
+
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/1.4.1/jspdf.debug.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/2.3.4/jspdf.plugin.autotable.min.js"></script>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/1.3.4/jspdf.min.js"></script>
+  {{!--
+  <script>
+
+    function Convert_HTML_To_PDF() {
+      var doc = new jsPDF();
+
+      // Source HTMLElement or a string containing HTML.
+      var elementHTML = document.querySelector("#contentToPrint");
+
+      doc.fromHTML(elementHTML, {
+        callback: function (doc) {
+          // Save the PDF
+          doc.save('document-html.pdf');
+        },
+        margin: [10, 10, 10, 10],
+        autoPaging: 'text',
+        x: 0,
+        y: 0,
+        width: 190, //target width in the PDF document
+        windowWidth: 675 //window width in CSS pixels
+      });
+    }
+
+  </script> --}}
+
+  <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
+  <script type="text/javascript">
+    $("#btnPrint").live("click", function () {
+      var divContents = $("#contentToPrint").html();
+
+      var printWindow = window.open('', '', 'height=400,width=800')
+      printWindow.document.write(divContents);
+      printWindow.document.close();
+      printWindow.print();
+    });
+  </script>
+
+
+  <div class="modal fade" id="modalexportbill{{@index}}" tabindex="-1" style="display: none" aria-hidden="true">
+      
+    
+      <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+  <div id="contentToPrint">
+          <div class="modal-header">
+            <h5 class="modal-title" id="modalCenterTitle">
+              Hóa đơn của khách hàng: {{this.id_khach_hang.ho_ten}}
+            </h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+
+          <div class="modal-body">
+            <div class="receipt-content">
+              <div class="container bootstrap snippets bootdey">
+                <div class="row">
+                  <div class="col-md-12">
+                    <div class="invoice-wrapper">
+                      <div class="intro">
+                        Xin chao <strong>{{this.id_khach_hang.ho_ten}}</strong>,
+                        <br>
+                        Cam on ban da cho chung toi co hoi duoc phuc vu<br>
+                        Day la bien lai thanh toan <strong>{{this.thanh_tien}}</strong> cua ban
+                      </div>
+
+                      <div class="payment-info">
+                        <div class="row">
+                          <div class="col-sm-6">
+                            <span>Ma thanh toan</span>
+                            <strong>{{this._id}}</strong>
+                          </div>
+                          <div class="col-sm-6 text-right">
+                            <span>Ngay thanh toan</span>
+                            <strong>{{this.updateAt}}</strong>
+                          </div>
+                        </div>
+                      </div>
+
+                      <div class="payment-details">
+                        <div class="row">
+                          <div class="col-sm-6">
+                            <span>Khach hang</span>
+                            <strong>
+                              {{this.id_khach_hang.ho_ten}}
+                            </strong>
+                            <p>
+                              {{this.id_khach_hang.dia_chi}}<br>
+                              <a href="#">
+                                {{this.id_khach_hang.email}}
+                              </a>
+                            </p>
+                          </div>
+                          <div class="col-sm-6 text-right">
+                            <span>Thanh toan cho</span>
+                            <strong>
+                              De Men Tour
+                            </strong>
+                            <p>
+                              Hung Loi, Ninh Kieu, Can Tho
+                              <br>
+                              0391231234<br>
+                              <a href="#">
+                                dementours@gmail.com
+                              </a>
+                            </p>
+                          </div>
+                        </div>
+                      </div>
+
+                      <div class="line-items">
+
+                        <div class="items">
+                          <div class="row item">
+                            <p>Tour: {{this.id_tour.ten}} </p>
+                            <small>Ngay khoi hanh: {{this.id_tour.khoi_hanh}}</small>
+                            <small>Noi khoi hanh: {{this.id_tour.diemkhoihanh}}</small>
+                            <p>So luong cho: {{this.soluongcho}}</p>
+
+                          </div>
+
+                        </div>
+                        <div class="total text-right">
+                          <div class="field grand-total">
+                            Tong tien thanh toan: <span>{{this.thanh_tien}}</span>
+                          </div><br>
+                          <p class="extra-notes">
+                            <strong>Luu y: </strong>
+                            Khach hang phai co mat tai dia diem khoi hanh truoc 1 tieng.
+                          </p>
+
+                        </div>
+
+
+                      </div>
+                    </div>
+
+
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
 </div>
+          <div class="modal-footer">
+            <div class="footer">
+              <div class="print">
+                <button id="btnPrint">
+
+                  <i class="fa fa-print"></i>
+                  In/Xuất hóa đơn ra file
+
+                </button>
+              </div>
+            </div>
+            <button type="button" class="btn btn-primary" data-bs-dismiss="modal">
+              Đóng
+            </button>
+          </div>
+    </div>
+
+
+
+          
+
+        </div>
+
+      </div>
+
+    
+
+
+
+    {{/each}}
+
+    </tbody>
+    </table>
+  </div>
 </div>
 </div>
 

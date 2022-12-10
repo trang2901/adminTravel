@@ -207,7 +207,7 @@
                 }
                 data.map((item) => {
                   items.forEach(record => {
-                    if (record.month === getMonth(item.createdAt) && item.trang_thai_duyet === "ĐÃ DUYỆT") {
+                    if (record.month === getMonth(item.createdAt) && item.trang_thai_duyet === "ĐÃ DUYỆT" && item.trang_thai_thanh_toan === "Đã thanh toán") {
                       record.amount += parseInt(item.thanh_tien.replaceAll('.', ''));
                     }
                   })
